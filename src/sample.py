@@ -188,7 +188,8 @@ class MapMetIP_Sample(Sample):
                 
                 self.rois[roi_num] = ROI()
                 
-                img = crop_image(img, px=2, axis=(1,2))
+                #crop image by 2 pixels to eliminate ablation artifacts
+                img = crop_image(img, px=2, axis=(1,2)) 
                 
                 setattr(self.rois[roi_num], "image_stack", img)
                 setattr(self.rois[roi_num], "stack_channels", np.array([self.LOOKUP_TABLE[c] for c in channels]))
