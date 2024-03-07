@@ -5,17 +5,20 @@ import cv2
 import numpy as np
 from .utils import GPU
 import logging
+from pathlib import Path
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
+
+CELLPOSE_FOLDER = Path("/home/daria_l/.cellpose/models")
 
 class Segmenter():
     
     def __init__(self, model):
         
         self.model = model
-        
-        if not os.path.isfile(self.model): 
+
+        if not os.path.isfile(self.model) and not(model in [x.stem for x in CELLPOSE_FOLDER.glob("*")]): 
             
             raise Exception(f"Model {self.model} does not exist!")
             
@@ -35,7 +38,7 @@ class Segmenter():
         logger.debug(f"nuclear_image.shape: {nuclear_image.shape}")
         logger.debug(f"detected masks: {masks.max()}")
               
-        if not isinstance(refine_threshold, type(None)):
+        if refine_threshold is not None:
         
             # give it a threshold that is going to be used for thresholding t = 0.12
             refined = refine_masks(nuclear_image, masks, t=refine_threshold)

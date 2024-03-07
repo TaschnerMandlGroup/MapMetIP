@@ -88,10 +88,10 @@ def percentile_clip(sample):
     perc_values = [np.percentile(pv, perc) for pv, perc in zip(sample.all_pixelvalues, percentiles)]
     logger.debug(f"percentile_values: {perc_values}")
 
-    assert not np.any(perc_values > sample.all_pixelvalues.max(axis=1)), "Error perc_values are higher than max, which cshould not happen"
+    assert not np.any(perc_values > sample.all_pixelvalues.max(axis=1)), "Error perc_values are higher than max, which should not happen"
 
     for roi, roi_data in sample.data.items():
-        sample.data[roi]["cliped_stack"] = clip_sample(roi_data["all_stack"], perc_values)
+        sample.data[roi]["clipped_stack"] = clip_sample(roi_data["all_stack"], perc_values)
         
     return sample
 

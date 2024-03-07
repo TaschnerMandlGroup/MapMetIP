@@ -38,7 +38,7 @@ def parse():
     parser.add_argument("--segmentation_model", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/MapMetIP/.cellpose_model/CP_BM", type=str)
     parser.add_argument("--refine_threshold", default=0.12)
     parser.add_argument("--log_path", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/MapMetIP/new_logs", type=str)
-    parser.add_argument("--perform_dimr", default=None, type=str)
+    parser.add_argument("--perform_dimr", default=None)
     args = parser.parse_args()
     
     
@@ -98,7 +98,7 @@ if __name__ == "__main__":
         mod0_stack = registerer.warp(mod0.image_stack, mod1.nuclear_image.squeeze().shape, registerer.h_mov2fix)
         mod1_stack = mod1.image_stack
 
-        if not isinstance(args.refine_threshold, type(None)):   
+        if args.refine_threshold is not None:   
 
             logger.debug("Refining Masks")
 
@@ -125,8 +125,8 @@ if __name__ == "__main__":
             sample.mod1[roi].image_stack = mod1_stack
             
             sample.data[roi] = {
-                "large_segmentation_masks": large_segmentation_masks,
-                "small_segmentation_masks": small_segmentation_masks,
+                "large_segmentation_masks": large_refined_segmentation_masks,
+                "small_segmentation_masks": small_refined_segmentation_masks
             }
                 
         else:
@@ -187,7 +187,7 @@ if __name__ == "__main__":
     
         for roi, data in sample.data.items():
             
-            logger.debug(f"Performing DIM for roi {roi}")
+            logger.debug(f"Performing DIMR for roi {roi}")
             hrm_stack = []
             for image in data["all_stack"]:
                 hrm_stack.append(DIMR(n_neighbours=4, n_iter=3, window_size=3).perform_DIMR(image))
@@ -204,7 +204,7 @@ if __name__ == "__main__":
     
         bc = BackgroundCorrecter(args.backgroundcorrection_folder)
         for roi, data in tqdm(sample.data.items()):
-            corrected, masks, new_channels = bc.correct(data["cliped_stack"], data["all_stack"], channels=data["all_channels"], keep_channels=sample.KEEP_CHANNELS)
+            corrected, masks, new_channels = bc.correct(data["clipped_stack"], data["all_stack"], channels=data["all_channels"], keep_channels=sample.KEEP_CHANNELS)
             sample.data[roi]["data_corrected"] = corrected
             sample.data[roi]["data_channels"] = new_channels
             
@@ -212,7 +212,7 @@ if __name__ == "__main__":
         
         logger.debug("Skipping background correction because backgroundcorrection_folder is None")
         for roi, _ in tqdm(sample.data.items()):
-            sample.data[roi]["data_corrected"] = sample.data[roi]["cliped_stack"]
+            sample.data[roi]["data_corrected"] = sample.data[roi]["clipped_stack"]
             sample.data[roi]["data_channels"] = sample.data[roi]["all_channels"]
     
     sample = minmax_sample(sample)

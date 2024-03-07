@@ -10,12 +10,18 @@ import sys
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-def spillover_correction(sample, spillover_matrix_path, out):
+def spillover_correction(sample, spillover_matrix_path, out, roi=None):
     
     files_before = os.listdir(out)
 
     files_created = []
-    for k in tqdm(list(sample.mod0.keys())):
+
+    if roi is not None: 
+        rois = [roi]
+    else:
+        rois=list(sample.mod0.keys())
+
+    for k in tqdm(rois):
         
         files_created.append(f"{sample.sample_name}_{k}.tiff")
         files_created.append(f"{sample.sample_name}_{k}.csv")
@@ -33,7 +39,7 @@ def spillover_correction(sample, spillover_matrix_path, out):
     
     try:
     
-        res0 = subprocess.call(f"docker run --rm -v {out}:/home/tmp -v {spillover_matrix_path}:/home/SPILLOVER MapMetIP:SPILLOVER Rscript /home/generate_spillovermatrix.R", shell=True)
+        res0 = subprocess.call(f"docker run --rm -v {out}:/home/tmp -v {spillover_matrix_path}:/home/SPILLOVER pipeline:SPILLOVER Rscript /home/generate_spillovermatrix.R", shell=True)
         
         if res0 == 0:
             logger.debug(f"Successfull generate_spillovermatrix.R: {res0}")
@@ -43,7 +49,7 @@ def spillover_correction(sample, spillover_matrix_path, out):
             logger.warning(f"Error in generate_spillovermatrix.R with Exit Code:{res0}")
 
         
-        res1 = subprocess.call(f"docker run --rm -v {out}:/home/tmp -v {spillover_matrix_path}:/home/SPILLOVER MapMetIP:SPILLOVER Rscript /home/spillover_compensation.R", shell=True)
+        res1 = subprocess.call(f"docker run --rm -v {out}:/home/tmp -v {spillover_matrix_path}:/home/SPILLOVER pipeline:SPILLOVER Rscript /home/spillover_compensation.R", shell=True)
         
         if res1 == 0:
             logger.debug(f"Successfull spillover_compensation.R")

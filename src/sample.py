@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 import cv2
 import tifffile
-#from xtiff import to_tiff
+from xtiff import to_tiff
 
 import logging
 
@@ -231,7 +231,7 @@ def save_sample(sample, out_dir):
         masks_vis = v["small_segmentation_masks"]
         large_masks = v["large_segmentation_masks"]
         channel_names = v["data_channels"]
-        
+
         masks = np.expand_dims(masks_vis, (0, 1, 2, 5))
 
         folders = ["large_segmentation_masks", "intensities-0px", "intensities-1px", "regionprops", "img", "img-vis", "masks", "masks-vis"]
