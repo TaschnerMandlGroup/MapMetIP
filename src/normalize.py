@@ -77,19 +77,19 @@ def normalize_sample_minmax(image_stack, min_vals, max_vals):
     
     return ret_stack
 
-
 def percentile_clip(sample):
     
     percentiles = [sample.PERCENTILE_LOOKUP[marker] for marker in sample.all_channels]
     logger.debug(f"sample.data_channels: {list(sample.all_channels)}")
     logger.debug(f"sample.PERCENTILE_LOOKUP: {sample.PERCENTILE_LOOKUP}")
     logger.debug(f"percentiles: {percentiles}")
-
+ 
     perc_values = [np.percentile(pv, perc) for pv, perc in zip(sample.all_pixelvalues, percentiles)]
+    
     logger.debug(f"percentile_values: {perc_values}")
-
-    assert not np.any(perc_values > sample.all_pixelvalues.max(axis=1)), "Error perc_values are higher than max, which should not happen"
-
+ 
+    assert not np.any(perc_values > sample.all_pixelvalues.max(axis=1)), "Error perc_values are higher than max, which cshould not happen"
+ 
     for roi, roi_data in sample.data.items():
         sample.data[roi]["clipped_stack"] = clip_sample(roi_data["all_stack"], perc_values)
         

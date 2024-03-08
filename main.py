@@ -28,22 +28,22 @@ def parse():
     
     parser = argparse.ArgumentParser()
     parser.add_argument("-s", "--sample_name", type=str, required=bool)
-    parser.add_argument("--base", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/MapMetIP/SAMPLES/", type=str)
-    parser.add_argument("--spillover_folder", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/MapMetIP/SPILLOVER/", type=str)
-    parser.add_argument("--docker_folder", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/MapMetIP/tmp/", type=str)
+    parser.add_argument("--base", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/raw_data/", type=str)
+    parser.add_argument("--spillover_folder", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/spillover/", type=str)
+    parser.add_argument("--docker_folder", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/spillover/out/", type=str)
     parser.add_argument("--registration_scale", default=1., type=float)
     parser.add_argument("--segmentation_diameter", default=55, type=int)
-    parser.add_argument("--backgroundcorrection_folder", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/MapMetIP/ILP_NEW_BM/", type=str)
-    parser.add_argument("--save_dir", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/MapMetIP/20240305/", type=str)
-    parser.add_argument("--segmentation_model", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/MapMetIP/.cellpose_model/CP_BM", type=str)
-    parser.add_argument("--refine_threshold", default=0.12)
-    parser.add_argument("--log_path", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/MapMetIP/new_logs", type=str)
-    parser.add_argument("--perform_dimr", default=None)
+    parser.add_argument("--backgroundcorrection_folder", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/BC_classifiers_BM/", type=str)
+    parser.add_argument("--save_dir", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/results/", type=str)
+    parser.add_argument("--refine_threshold", default=0.12, type=float),
+    parser.add_argument("--segmentation_model", type=str),
+    parser.add_argument("--log_path", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/logs", type=str)
+    parser.add_argument("--perform_dimr", default=True)
     args = parser.parse_args()
     
     
     for arg in vars(args):
-        if getattr(args, arg).lower() == 'none':
+        if getattr(args, arg) == 'none' or getattr(args, arg) == 'None':
             setattr(args, arg, None)
 
     print(args)
@@ -52,7 +52,7 @@ def parse():
 
 if __name__ == "__main__":
     
-    debug_file = "/home/daria_l/src/MapMetIP/debug_file.json" #None
+    debug_file = None#"/home/daria_l/src/MapMetIP/debug_file.json" 
     
     
     if debug_file:
