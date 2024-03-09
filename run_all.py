@@ -46,7 +46,7 @@ if __name__ == "__main__":
             refine_threshold = 0.12
             registration_scale = 1
             log_path = "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/logs"
-            save_dir = "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/results/"
+            save_dir = "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/debugging/results"
             
 
         elif "TU" in sample:
@@ -57,7 +57,7 @@ if __name__ == "__main__":
             refine_threshold = "None"
             registration_scale = 1
             log_path = "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/logs"
-            save_dir = "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/results/"
+            save_dir = "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/results_debug_background/"
 
         try:
             

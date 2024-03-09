@@ -28,7 +28,7 @@ def parse():
     
     parser = argparse.ArgumentParser()
     parser.add_argument("-s", "--sample_name", type=str, required=bool)
-    parser.add_argument("--base", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/raw_data/", type=str)
+    parser.add_argument("--base", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/PIPELINE/SAMPLES/", type=str)
     parser.add_argument("--spillover_folder", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/spillover/", type=str)
     parser.add_argument("--docker_folder", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/spillover/out/", type=str)
     parser.add_argument("--registration_scale", default=1., type=float)
@@ -52,8 +52,7 @@ def parse():
 
 if __name__ == "__main__":
     
-    debug_file = None#"/home/daria_l/src/MapMetIP/debug_file.json" 
-    
+    debug_file = "/home/daria_l/src/MapMetIP/debug_file.json" #None
     
     if debug_file:
         with open(debug_file, 'rb') as fh:
@@ -204,7 +203,7 @@ if __name__ == "__main__":
     
         bc = BackgroundCorrecter(args.backgroundcorrection_folder)
         for roi, data in tqdm(sample.data.items()):
-            corrected, masks, new_channels = bc.correct(data["clipped_stack"], data["all_stack"], channels=data["all_channels"], keep_channels=sample.KEEP_CHANNELS)
+            corrected, masks, new_channels = bc.correct(roi, data["clipped_stack"], data["all_stack"], channels=data["all_channels"], keep_channels=sample.KEEP_CHANNELS)
             sample.data[roi]["data_corrected"] = corrected
             sample.data[roi]["data_channels"] = new_channels
             

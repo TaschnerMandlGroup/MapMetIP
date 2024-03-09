@@ -1,12 +1,13 @@
 {
-    "sample_name": "20220519_20211222_Sample_014_BM",
-    "base": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/raw_data/",
+    "sample_name": "20220727_20220222_16-4503_BM",
+    "base": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/PIPELINE/SAMPLES/",
     "spillover_folder": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/spillover/",
     "docker_folder": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/spillover/out",
     "segmentation_diameter": 55,
     "backgroundcorrection_folder": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/BC_classifiers_BM/",
-    "save_dir": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/results/",
+    "save_dir": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/debugging/results",
     "refine_threshold": 0.12,
     "segmentation_model":"CP_BM",
-    "log_path": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/logs"
+    "log_path": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/logs",
+    "perform_dimr": "True"
 }
