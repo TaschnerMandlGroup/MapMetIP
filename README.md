@@ -29,7 +29,6 @@ In order to use the image-processing pipeline, the following steps have to be pe
 ```
 $ conda create -n 'mapmet_ip' python=3.10
 ```
-
 ### Docker
 
 ### Download example data
@@ -37,9 +36,10 @@ $ conda create -n 'mapmet_ip' python=3.10
 ```
 $ zenodo_get 10.5281/zenodo.10801832
 ```
-
-## Support
-
 ## Authors
+
+[Daria Lazic](https://github.com/LazDaria)
+
+[Simon Gutwein](https://github.com/SimonBon/)
 
 ## References
