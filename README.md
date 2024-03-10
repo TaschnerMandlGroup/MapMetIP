@@ -38,9 +38,9 @@ $ zenodo_get 10.5281/zenodo.10801832
 ```
 ## Authors
 
-[Daria Lazic](https://github.com/LazDaria)
-
 [Simon Gutwein](https://github.com/SimonBon/)
+
+[Daria Lazic](https://github.com/LazDaria)
 
 ## References
 Please cite the following paper when using `MapMetIP`:
