@@ -66,11 +66,11 @@ Please cite the following paper when using `MapMetIP`:
     }
 
 ## References
-[1] [Pachitariu et al. (2022), Nature Methods.] (https://www.nature.com/articles/s41592-022-01663-4)
-[2] [Mahesh et al. (2012), ICCCNT'12.] (https://ieeexplore.ieee.org/document/6396024)
-[3] [Chevrier et al. (2018), Cell Systems.] (https://doi.org/10.1016/j.cels.2018.02.010)
-[4] [Lu et al. (2023), Nature Communications.] (https://www.nature.com/articles/s41467-023-37123-6)
-[5] [Berg et al. (2019), Nature Methods.] (https://www.nature.com/articles/s41592-019-0582-9)
+- [1] [Pachitariu et al. (2022), Nature Methods.](https://www.nature.com/articles/s41592-022-01663-4)
+- [2] [Mahesh et al. (2012), ICCCNT'12.](https://ieeexplore.ieee.org/document/6396024)
+- [3] [Chevrier et al. (2018), Cell Systems.](https://doi.org/10.1016/j.cels.2018.02.010)
+- [4] [Lu et al. (2023), Nature Communications.](https://www.nature.com/articles/s41467-023-37123-6)
+- [5] [Berg et al. (2019), Nature Methods.](https://www.nature.com/articles/s41592-019-0582-9)
 
 ## Funding
 
