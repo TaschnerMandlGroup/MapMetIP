@@ -1,19 +1,19 @@
-from MapMetIP.src.sample import MapMetIP_Sample, save_sample
-from MapMetIP.src.spillover import spillover_correction
-from MapMetIP.src.segmentation import Segmenter
-from MapMetIP.src.register import Registerer
-from MapMetIP.src.normalize import percentile_clip
-from MapMetIP.src.neighbors import extract_neighbors
+from MapMetIP.MapMetIP.sample import MapMetIP_Sample, save_sample
+from MapMetIP.MapMetIP.spillover import spillover_correction
+from MapMetIP.MapMetIP.segmentation import Segmenter
+from MapMetIP.MapMetIP.register import Registerer
+from MapMetIP.MapMetIP.normalize import percentile_clip
+from MapMetIP.MapMetIP.neighbors import extract_neighbors
 import argparse
 import os
-from MapMetIP.src.utils import setup_logger
+from MapMetIP.MapMetIP.utils import setup_logger
 import logging
 import numpy as np
 import cv2
-from MapMetIP.src.background_correction import BackgroundCorrecter
+from MapMetIP.MapMetIP.background_correction import BackgroundCorrecter
 from tqdm import tqdm
-from MapMetIP.src.normalize import minmax_sample
-from MapMetIP.src.feature_extraction import FeatureExtractor, extract_sample_features, MORPH_MEASURES
+from MapMetIP.MapMetIP.normalize import minmax_sample
+from MapMetIP.MapMetIP.feature_extraction import FeatureExtractor, extract_sample_features, MORPH_MEASURES
 from IMC_Denoise.IMC_Denoise.IMC_Denoise_main.DIMR import DIMR
 import tifffile
 import sys
