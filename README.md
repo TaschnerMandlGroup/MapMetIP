@@ -12,8 +12,7 @@ A pipeline for processing multi-modal (IF and IMC) & multiplexed images within t
 * [Introduction](#introduction)
 * [Usage](#usage)
 * [Support](#support)
-* [Citation](#citation)
-* [Author](#authors)
+* [Authors](#authors)
 * [References](#references)
 
 ## Introduction
@@ -41,6 +40,6 @@ $ zenodo_get 10.5281/zenodo.10801832
 
 ## Support
 
-## Citation
-
 ## Authors
+
+## References
