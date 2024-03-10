@@ -3,6 +3,7 @@
 # MapMet - Image Processing Pipeline
 [comment]: <> (repo-specific shields will work once the repo is online)
 ![Python Version](https://img.shields.io/badge/python-3.10.9-blue)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10801832.svg)](https://doi.org/10.5281/zenodo.10801832)
 ![Suggestions Welcome](https://img.shields.io/badge/suggestions-welcome-green)
 
 A pipeline for processing multi-modal (IF and IMC) & multiplexed images within the MapMet (Mapping Metastases in neuroblastoma) project. 
@@ -12,10 +13,12 @@ A pipeline for processing multi-modal (IF and IMC) & multiplexed images within t
 * [Introduction](#introduction)
 * [Usage](#usage)
 * [Support](#support)
-* [Authors](#authors)
+* [Contributors](#contributors)
 * [References](#references)
+* [Funding](#funding)
 
 ## Introduction
+
 
 ## Usage
 
@@ -36,7 +39,7 @@ $ conda create -n 'mapmet_ip' python=3.10
 ```
 $ zenodo_get 10.5281/zenodo.10801832
 ```
-## Authors
+## Contributors
 
 [Simon Gutwein](https://github.com/SimonBon/)
 
@@ -55,5 +58,7 @@ Please cite the following paper when using `MapMetIP`:
         URL = {URL},
         journal = {Nature Cancer - let's hope}
     }
+## Funding
 
+This work was funded by the Austrian Science Fund (FWF#I4162 and FWF#35841), the Vienna Science and Technology Fund (WWTF; LS18-111), the Swiss Government Excellence Scholarship and the St. Anna Kinderkrebsforschung e.V.
 
