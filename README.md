@@ -11,7 +11,7 @@ A pipeline for processing multi-modal (IF and IMC) multiplexed images within the
 ---
 
 * [Overview](#overview)
-* [Usage](#usage)
+* [Installation](#installation)
 * [Contributors](#contributors)
 * [Citation](#citation)
 * [References](#references)
@@ -26,18 +26,31 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
 5. **Background correction and normalization** using background/foreground classifiers trained in [Ilastik](https://github.com/ilastik/ilastik/tree/main) [5] - individual models were trained for each marker and tissue type (primary tumor/bone marrow)
 6. **Feature Extraction**: extraction of marker intensity and morphological features
 
-## Usage
+## Installation
+
+First clone the repository:
+```ruby
+git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
+cd MapMetIP
+```
+It is recommended to install `MapMetIP` into a conda environment together with other necessary packages. If you are new to conda, please refer to these [instructions](https://biapol.github.io/blog/mara_lampert/getting_started_with_mambaforge_and_python/readme.html) first. 
+```ruby
+conda env create -f env.yml
+```
+You can then activate the environment:
+```ruby
+conda activate mapmet_ip
+```
+And install `MapMetIP`
+```ruby
+pip install -e .
+```
 
 In order to use the image-processing pipeline, the following steps have to be performed:
 - install environment from env.yml
 - download example data and cellpose and ilastik models
 - pull docker image for spillover compensation
-  
-### Installation
-- Create a virtual environment
-```
-$ conda create -n 'mapmet_ip' python=3.10
-```
+
 ### Docker
 
 ### Download example data
