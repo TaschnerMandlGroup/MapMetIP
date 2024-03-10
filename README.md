@@ -20,6 +20,11 @@ A pipeline for processing multi-modal (IF and IMC) & multiplexed images within t
 
 ## Usage
 
+In order to use the image-processing pipeline, the following steps have to be performed:
+- install environment from env.yml
+- download example data and cellpose and ilastik models
+- pull docker image for spillover compensation
+  
 ### Installation
 - Create a virtual environment
 ```
