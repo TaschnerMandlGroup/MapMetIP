@@ -29,6 +29,10 @@ $ conda create -n 'mapmet_ip' python=3.10
 ### Docker
 
 ### Download example data
+[comment]: <> (zenodo get has to be installed first)
+```
+$ zenodo_get 10.5281/zenodo.10801832
+```
 
 ## Support
 
