@@ -43,3 +43,17 @@ $ zenodo_get 10.5281/zenodo.10801832
 [Simon Gutwein](https://github.com/SimonBon/)
 
 ## References
+Please cite the following paper when using `MapMetIP`:
+
+>  Lazic, D., Gutwein, S., Humhal V. et al. Mapping Metastases in Neuroblastoma. Nat Cancer (2024). https://doi.org/DOI
+
+    @article{Lazic2024,
+        author = {Lazic, Daria and Gutwein, Simon and },
+        title = {Mapping Metastases in Neuroblastoma},
+        year = {2024},
+        doi = {DOI},
+        URL = {URL},
+        journal = {Nature Cancer - let's hope}
+    }
+
+
