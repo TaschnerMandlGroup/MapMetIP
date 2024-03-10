@@ -32,7 +32,6 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
 First clone the repository:
 ```ruby
 git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
-cd MapMetIP
 ```
 It is recommended to install `MapMetIP` into a conda environment together with other necessary packages. If you are new to conda, please refer to these [instructions](https://biapol.github.io/blog/mara_lampert/getting_started_with_mambaforge_and_python/readme.html) first. 
 ```ruby
@@ -44,21 +43,44 @@ conda activate mapmet_ip
 ```
 And install `MapMetIP`
 ```ruby
+cd MapMetIP
 pip install -e .
 ```
 ## Usage
 In order to be able to use the segmentation and background correction within `MapMetIP`, the segmentation models and background/foreground classifiers are required. We will download the fine-tuned cellpose models and ilastik-trained background/foreground classifiers, along with a test dataset, from `zenodo`. 
 ### Download cellpose models, ilastik classifiers and test data
+[comment]: <> (also possible like this: zenodo_get 10.5281/zenodo.10801832)
 ```ruby
-zenodo_get 10.5281/zenodo.10801832
+cd ..
+wget https://sandbox.zenodo.org/records/34123/files/MapMet_TestDataset.zip
+unzip MapMet_TestDataset.zip
+```
+If you want to unzip the file into a specific directory, use:
+```ruby
+unzip MapMet_TestDataset.zip - /path/to/extract_directory
 ```
 ### Pull R-based docker image for spillover compensation
 Spillover compensation is executed in an R-based docker container. In case you need to setup docker, follow these [instructions](https://docs.docker.com/get-started/overview/). Then, pull our image from docker hub. 
 ```ruby
 docker image pull mapmetip_spillovercomp
 ```
-### Docker
+### Testing
 
+Notebooks demonstrating each step of the pipeline on one representative primary tumor sample ([tests/process_TU_sample.ipynb](https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/tests/process_TU_sample.ipynb)) and one representative bone marrow sample ([tests/process_BM_sample.ipynb](https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/tests/process_BM_sample.ipynb)) are provided. 
+
+### Process entire dataset
+To process the entire dataset, described in Lazic et al., download the complete dataset:
+```ruby
+wget https://sandbox.zenodo.org/records/34123/files/MapMet_FullDataset.zip #to be uploaded
+unzip MapMet_FullDataset.zip
+```
+And either run sample per sample using 
+```ruby
+python3 main.py -s path/to/your/sample #make sure this works, are more args needed?
+```
+or the full dataset via
+```ruby
+python3 run_all.py -s sample1 sample2 sample3 #find out how the directory can be passed instead samples
 ```
 ## Contributors
 
