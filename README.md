@@ -46,6 +46,11 @@ And install `MapMetIP`
 cd MapMetIP
 pip install -e .
 ```
+### Pull R-based docker image for spillover compensation
+Spillover compensation is executed in an R-based docker container. In case you need to setup docker, follow these [instructions](https://docs.docker.com/get-started/overview/). Then, pull our image from docker hub. 
+```ruby
+docker image pull mapmetip_spillovercomp
+```
 ## Usage
 In order to be able to use the segmentation and background correction within `MapMetIP`, the segmentation models and background/foreground classifiers are required. We will download the fine-tuned cellpose models and ilastik-trained background/foreground classifiers, along with a test dataset, from `zenodo`. 
 ### Download cellpose models, ilastik classifiers and test data
@@ -59,16 +64,11 @@ If you want to unzip the file into a specific directory, use:
 ```ruby
 unzip MapMet_TestDataset.zip - /path/to/extract_directory
 ```
-### Pull R-based docker image for spillover compensation
-Spillover compensation is executed in an R-based docker container. In case you need to setup docker, follow these [instructions](https://docs.docker.com/get-started/overview/). Then, pull our image from docker hub. 
-```ruby
-docker image pull mapmetip_spillovercomp
-```
 ### Testing
 
 Notebooks demonstrating each step of the pipeline on one representative primary tumor sample ([tests/process_TU_sample.ipynb](https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/tests/process_TU_sample.ipynb)) and one representative bone marrow sample ([tests/process_BM_sample.ipynb](https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/tests/process_BM_sample.ipynb)) are provided. 
 
-### Process entire dataset
+### Process multiple samples
 To process the entire dataset, described in Lazic et al., download the complete dataset:
 ```ruby
 wget https://sandbox.zenodo.org/records/34123/files/MapMet_FullDataset.zip #to be uploaded
