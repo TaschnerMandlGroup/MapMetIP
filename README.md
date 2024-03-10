@@ -12,6 +12,7 @@ A pipeline for processing multi-modal (IF and IMC) multiplexed images within the
 
 * [Overview](#overview)
 * [Installation](#installation)
+* [Usage](#usage)
 * [Contributors](#contributors)
 * [Citation](#citation)
 * [References](#references)
@@ -45,18 +46,19 @@ And install `MapMetIP`
 ```ruby
 pip install -e .
 ```
-
-In order to use the image-processing pipeline, the following steps have to be performed:
-- install environment from env.yml
-- download example data and cellpose and ilastik models
-- pull docker image for spillover compensation
-
+## Usage
+In order to be able to use the segmentation and background correction within `MapMetIP`, the segmentation models and background/foreground classifiers are required. We will download the fine-tuned cellpose models and ilastik-trained background/foreground classifiers, along with a test dataset, from `zenodo`. 
+### Download cellpose models, ilastik classifiers and test data
+```ruby
+zenodo_get 10.5281/zenodo.10801832
+```
+### Pull R-based docker image for spillover compensation
+Spillover compensation is executed in an R-based docker container. In case you need to setup docker, follow these [instructions](https://docs.docker.com/get-started/overview/). Then, pull our image from docker hub. 
+```ruby
+docker image pull mapmetip_spillovercomp
+```
 ### Docker
 
-### Download example data
-[comment]: <> (zenodo get has to be installed first)
-```
-$ zenodo_get 10.5281/zenodo.10801832
 ```
 ## Contributors
 
