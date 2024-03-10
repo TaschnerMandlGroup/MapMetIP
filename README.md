@@ -10,14 +10,14 @@ A pipeline for processing multi-modal (IF and IMC) multiplexed images within the
 
 ---
 
-* [Introduction](#introduction)
+* [Overview](#overview)
 * [Usage](#usage)
 * [Contributors](#contributors)
 * [Citation](#citation)
 * [References](#references)
 * [Funding](#funding)
 
-## Introduction
+## Overview
 This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we use 3-plex immmunofluorescence (IF) microscopy and 41-plex imaging mass cytometry (IMC) to spatially and temporally map primary and metastatic neuroblastoma. The pipeline can be largely divided into the following steps:
 1. **Segmentation** based on nuclear IF (DAPI) image using [cellpose](https://github.com/MouseLand/cellpose) [1] model finetuned on our own data - individual models were trained for primary tumor (`CP_TU`) and metastatic bone marrow samples (`CP_BM`)
 2. **Registration** between IF and IMC images/masks via scale-invariant feature transformation ([SIFT](https://ieeexplore.ieee.org/document/6396024)) [2]
