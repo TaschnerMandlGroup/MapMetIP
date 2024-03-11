@@ -35,6 +35,7 @@ git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
 ```
 It is recommended to install `MapMetIP` into a conda environment together with other necessary packages. If you are new to conda, please refer to these [instructions](https://biapol.github.io/blog/mara_lampert/getting_started_with_mambaforge_and_python/readme.html) first. 
 ```ruby
+cd MapMetIP
 conda env create -f env.yml
 ```
 You can then activate the environment:
@@ -43,7 +44,6 @@ conda activate mapmet_ip
 ```
 And install `MapMetIP`
 ```ruby
-cd MapMetIP
 pip install -e .
 ```
 ### Pull R-based docker image for spillover compensation
