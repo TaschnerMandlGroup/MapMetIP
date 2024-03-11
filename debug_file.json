@@ -1,13 +1,13 @@
 {
-    "sample_name": "20220727_20220222_16-4503_BM",
-    "base": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/PIPELINE/SAMPLES/",
-    "spillover_folder": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/spillover/",
-    "docker_folder": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/spillover/out",
+    "sample_name": "20220727_20220222_16-063_BM",
+    "base": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_TestDataset/BM/raw_data/",
+    "spillover_folder": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_models/spillover/",
+    "docker_folder": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_models/spillover/out",
     "segmentation_diameter": 55,
-    "backgroundcorrection_folder": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/BC_classifiers_BM/",
-    "save_dir": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/debugging/results",
+    "backgroundcorrection_folder": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_models/BM/BC_classifiers",
+    "save_dir": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_TestDataset/BM/results",
     "refine_threshold": 0.12,
-    "segmentation_model":"CP_BM",
-    "log_path": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/logs",
-    "perform_dimr": "True"
+    "segmentation_model":"/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_models/BM/segmentation_model/CP_BM",
+    "log_path": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_TestDataset/BM/results"
 }
+

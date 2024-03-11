@@ -1,45 +1,46 @@
-from MapMetIP.MapMetIP.sample import MapMetIP_Sample, save_sample
-from MapMetIP.MapMetIP.spillover import spillover_correction
-from MapMetIP.MapMetIP.segmentation import Segmenter
-from MapMetIP.MapMetIP.register import Registerer
-from MapMetIP.MapMetIP.normalize import percentile_clip
-from MapMetIP.MapMetIP.neighbors import extract_neighbors
+from MapMetIP.sample import MapMetIP_Sample, save_sample
+from MapMetIP.spillover import spillover_correction
+from MapMetIP.segmentation import Segmenter
+from MapMetIP.register import Registerer
+from MapMetIP.normalize import percentile_clip
+from MapMetIP.neighbors import extract_neighbors
 import argparse
 import os
-from MapMetIP.MapMetIP.utils import setup_logger
+from MapMetIP.utils import setup_logger
 import logging
 import numpy as np
 import cv2
-from MapMetIP.MapMetIP.background_correction import BackgroundCorrecter
+from MapMetIP.background_correction import BackgroundCorrecter
 from tqdm import tqdm
-from MapMetIP.MapMetIP.normalize import minmax_sample
-from MapMetIP.MapMetIP.feature_extraction import FeatureExtractor, extract_sample_features, MORPH_MEASURES
+from MapMetIP.normalize import minmax_sample
+from MapMetIP.feature_extraction import FeatureExtractor, extract_sample_features, MORPH_MEASURES
 from IMC_Denoise.IMC_Denoise.IMC_Denoise_main.DIMR import DIMR
 import tifffile
 import sys
+from pathlib import Path
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 import json
-from src.utils import DEBUGGER
+from MapMetIP.utils import DEBUGGER
 
 def parse():
     
     parser = argparse.ArgumentParser()
-    parser.add_argument("-s", "--sample_name", type=str, required=bool)
-    parser.add_argument("--base", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/PIPELINE/SAMPLES/", type=str)
-    parser.add_argument("--spillover_folder", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/spillover/", type=str)
-    parser.add_argument("--docker_folder", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/spillover/out/", type=str)
-    parser.add_argument("--registration_scale", default=1., type=float)
-    parser.add_argument("--segmentation_diameter", default=55, type=int)
-    parser.add_argument("--backgroundcorrection_folder", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/BC_classifiers_BM/", type=str)
-    parser.add_argument("--save_dir", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/results/", type=str)
-    parser.add_argument("--refine_threshold", default=0.12, type=float),
-    parser.add_argument("--segmentation_model", type=str),
-    parser.add_argument("--log_path", default="/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/logs", type=str)
-    parser.add_argument("--perform_dimr", default=True)
-    args = parser.parse_args()
+
+    parser.add_argument("-s", "--sample_name", type=str, required=bool, help="Name of the sample to process.")
+    parser.add_argument("--base", type=str, required=bool, help="Path to sample folder.")
+    parser.add_argument("--spillover_folder", type=str, help="Path to spillover measurements. Will be skipped unless defined.")
+    parser.add_argument("--docker_folder", type=str, help="Path to store temporary data during spillover compensation. Required for spillover compensation.")
+    parser.add_argument("--registration_scale", default=1., type=float, help="Scale for SIFT-registration.")
+    parser.add_argument("--segmentation_diameter", type=int, required=bool, help="Average diameter used in cellpose semgentation. ")
+    parser.add_argument("--backgroundcorrection_folder", type=str, help="Path to ilastik background/foreground classifiers. Will be skipped unless defined.")
+    parser.add_argument("--save_dir", type=str, required=bool, help="Path to write results.")
+    parser.add_argument("--refine_threshold", type=float, required=bool, help="Threshold used for refinement of mask. Will be skipped, unless defined."),
+    parser.add_argument("--segmentation_model", type=str, required=bool, help="Path to cellpose segmentation model."),
+    parser.add_argument("--log_path", type=str, required=bool, help="Path to write log files.")
+    parser.add_argument("--perform_dimr", default=True, help="Skip DIMR hot pixel removal.")
     
     
     for arg in vars(args):
@@ -51,8 +52,9 @@ def parse():
     return args 
 
 if __name__ == "__main__":
-    
-    debug_file = "/home/daria_l/src/MapMetIP/debug_file.json" #None
+    script_path = os.path.abspath(__file__)
+    script_dir = os.path.dirname(script_path)
+    debug_file = (os.path.join(script_dir, "debug_file.json")) #None
     
     if debug_file:
         with open(debug_file, 'rb') as fh:
@@ -62,6 +64,8 @@ if __name__ == "__main__":
                 setattr(args, k, v)
     else:
         args = parse()
+
+    sample_name = args.sample_name
         
     setup_logger(args.sample_name, args.log_path)    
     
@@ -203,7 +207,7 @@ if __name__ == "__main__":
     
         bc = BackgroundCorrecter(args.backgroundcorrection_folder)
         for roi, data in tqdm(sample.data.items()):
-            corrected, masks, new_channels = bc.correct(roi, data["clipped_stack"], data["all_stack"], channels=data["all_channels"], keep_channels=sample.KEEP_CHANNELS)
+            corrected, masks, new_channels = bc.correct(data["clipped_stack"], data["all_stack"], channels=data["all_channels"], keep_channels=sample.KEEP_CHANNELS)
             sample.data[roi]["data_corrected"] = corrected
             sample.data[roi]["data_channels"] = new_channels
             

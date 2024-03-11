@@ -29,9 +29,7 @@ class BackgroundCorrecter():
         logger.debug(f"models: {self.models}")
         
     
-    def correct(self, roi, clipped_stack, image_stack, channels, threshold=0.5, keep_channels=None):
-
-        #random.seed(20240309)
+    def correct(self, clipped_stack, image_stack, channels, threshold=0.5, keep_channels=None):
         
         logger.debug(f"threshold: {threshold}")
         logger.debug(f"channels: {channels}")
@@ -46,10 +44,6 @@ class BackgroundCorrecter():
                 clip_stack.append(clipped_image)
                 new_channels.append(channel)
                 continue
-            
-            if channel == "DNA1_Ir191":
-                tiff.imwrite(os.path.join("/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/debugging/image/", str(roi) + ".tif"), image)
-                tiff.imwrite(os.path.join("/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/debugging/clipped_image/", str(roi) + ".tif"), clipped_image)
 
             model = [x for x in self.models if channel in x]
             

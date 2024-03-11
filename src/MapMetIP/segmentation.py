@@ -10,15 +10,13 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-CELLPOSE_FOLDER = Path("/home/daria_l/.cellpose/models")
-
 class Segmenter():
     
     def __init__(self, model):
         
         self.model = model
 
-        if not os.path.isfile(self.model) and not(model in [x.stem for x in CELLPOSE_FOLDER.glob("*")]): 
+        if not os.path.isfile(self.model): 
             
             raise Exception(f"Model {self.model} does not exist!")
             

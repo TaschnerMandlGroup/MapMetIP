@@ -1,0 +1,8 @@
+{
+    "sample_name": "20220727_20220222_16-063_BM",
+    "base": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_TestDataset/BM/raw_data/",
+    "segmentation_diameter": 55,
+    "save_dir": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_TestDataset/BM/results",
+    "segmentation_model":"/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_models/BM/segmentation_model/CP_BM",
+    "log_path": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_TestDataset/BM/results"
+}

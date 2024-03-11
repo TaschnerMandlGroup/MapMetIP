@@ -12,6 +12,7 @@ A pipeline for processing multi-modal (IF and IMC) multiplexed images within the
 
 * [Overview](#overview)
 * [Installation](#installation)
+* [Download data](#download data)
 * [Usage](#usage)
 * [Contributors](#contributors)
 * [Citation](#citation)
@@ -49,38 +50,62 @@ pip install -e .
 ### Pull R-based docker image for spillover compensation
 Spillover compensation is executed in an R-based docker container. In case you need to setup docker, follow these [instructions](https://docs.docker.com/get-started/overview/). Then, pull our image from docker hub. 
 ```ruby
-docker image pull mapmetip_spillovercomp
+docker image pull lazdaria/spillovercomp
 ```
-## Usage
-In order to be able to use the segmentation and background correction within `MapMetIP`, the segmentation models and background/foreground classifiers are required. We will download the fine-tuned cellpose models and ilastik-trained background/foreground classifiers, along with a test dataset, from `zenodo`. 
-### Download cellpose models, ilastik classifiers and test data
-[comment]: <> (also possible like this: zenodo_get 10.5281/zenodo.10801832)
+
+### Clone IMC-Denoise github repository for DIMR hot-pixel removal
+To be able to use DIMR hot-poxel removal, clone the [IMC-Denoise github repository]() to the parent directory of MapMetIP.
 ```ruby
 cd ..
-wget https://sandbox.zenodo.org/records/34123/files/MapMet_TestDataset.zip
-unzip MapMet_TestDataset.zip
+git clone --branch v1.0.0 https://github.com/PENGLU-WashU/IMC_Denoise.git
 ```
-If you want to unzip the file into a specific directory, use:
+## Download data
+
+### Download cellpose models, spillover measurements and ilastik classifiers
+In order to be able to use the segmentation, spillover compensation and background correction within `MapMetIP`, the segmentation models, the spillover measurements and background/foreground classifiers are required. We will download the fine-tuned cellpose models, spillover measurements and ilastik-trained background/foreground classifiers from `zenodo`. 
+[comment]: <> (also possible like this: zenodo_get 10.5281/zenodo.10801832)
+Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
 ```ruby
-unzip MapMet_TestDataset.zip - /path/to/extract_directory
+wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/34280/files/MapMetIP_models.zip
+unzip <path/to/extract/directory>/MapMetIP_models.zip -d <path/to/extract/directory>
+rm <path/to/extract/directory>/MapMetIP_models.zip
 ```
+
+### Download test dataset
+We prepared a small test dataset with one representative primary tumor and bone marrow sample to be used in the notebooks for demonstration purposes.
+[comment]: <> (also possible like this: zenodo_get 10.5281/zenodo.10801832)
+Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
+```ruby
+wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/34280/files/MapMetIP_TestDataset.zip
+unzip <path/to/extract/directory>/MapMetIP_TestDataset.zip -d <path/to/extract/directory>
+rm <path/to/extract/directory>/MapMetIP_TestDataset.zip
+```
+
+### Download full dataset
+To process the entire dataset, described in Lazic et al., download the complete dataset. Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
+```ruby
+wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/34123/files/MapMet_FullDataset.zip #to be uploaded
+unzip <path/to/extract/directory>/MapMet_FullDataset.zip -d <path/to/extract/directory>
+rm <path/to/extract/directory>/MapMet_FullDataset.zip
+```
+
+## Usage
+
 ### Testing
 
-Notebooks demonstrating each step of the pipeline on one representative primary tumor sample ([tests/process_TU_sample.ipynb](https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/tests/process_TU_sample.ipynb)) and one representative bone marrow sample ([tests/process_BM_sample.ipynb](https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/tests/process_BM_sample.ipynb)) are provided. 
+Notebooks, demonstrating each step of the pipeline on the primary tumor sample ([tests/process_TU_sample.ipynb](https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/tests/process_TU_sample.ipynb)) and bone marrow sample ([tests/process_BM_sample.ipynb](https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/tests/process_BM_sample.ipynb)) from the test dataset, are provided. 
 
 ### Process multiple samples
-To process the entire dataset, described in Lazic et al., download the complete dataset:
+
+To run the complete image processing pipeline on a defined sample:
 ```ruby
-wget https://sandbox.zenodo.org/records/34123/files/MapMet_FullDataset.zip #to be uploaded
-unzip MapMet_FullDataset.zip
+cd MapMetIP
+python3 run_all.py -s <sample_name> --data_path <path/to>/MapMetIP_TestDataset/raw_data --model_path <path/to>/MapMetIP_models --save_dir <path/to/results_folder>
 ```
-And either run sample per sample using 
+or on a list of samples
 ```ruby
-python3 main.py -s path/to/your/sample #make sure this works, are more args needed?
-```
-or the full dataset via
-```ruby
-python3 run_all.py -s sample1 sample2 sample3 #find out how the directory can be passed instead samples
+cd MapMetIP
+python3 run_all.py -s <sample_name1> <sample_2> <sample_name3> --data_path <path/to>/MapMetIP_TestDataset/raw_data --model_path <path/to>/MapMetIP_models --save_dir <path/to/results_folder>
 ```
 ## Contributors
 

@@ -39,7 +39,7 @@ def spillover_correction(sample, spillover_matrix_path, out, roi=None):
     
     try:
     
-        res0 = subprocess.call(f"docker run --rm -v {out}:/home/tmp -v {spillover_matrix_path}:/home/SPILLOVER pipeline:SPILLOVER Rscript /home/generate_spillovermatrix.R", shell=True)
+        res0 = subprocess.call(f"docker run --rm -v {out}:/home/tmp -v {spillover_matrix_path}:/home/SPILLOVER lazdaria/spillovercomp Rscript /home/generate_spillovermatrix.R", shell=True)
         
         if res0 == 0:
             logger.debug(f"Successfull generate_spillovermatrix.R: {res0}")
@@ -49,7 +49,7 @@ def spillover_correction(sample, spillover_matrix_path, out, roi=None):
             logger.warning(f"Error in generate_spillovermatrix.R with Exit Code:{res0}")
 
         
-        res1 = subprocess.call(f"docker run --rm -v {out}:/home/tmp -v {spillover_matrix_path}:/home/SPILLOVER pipeline:SPILLOVER Rscript /home/spillover_compensation.R", shell=True)
+        res1 = subprocess.call(f"docker run --rm -v {out}:/home/tmp -v {spillover_matrix_path}:/home/SPILLOVER lazdaria/spillovercomp Rscript /home/spillover_compensation.R", shell=True)
         
         if res1 == 0:
             logger.debug(f"Successfull spillover_compensation.R")
