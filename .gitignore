@@ -1,4 +1,4 @@
-/.cellpose_model
 *__pycache__
 *.pkl
 *.png
+*/MapMetIP.egg-info/*

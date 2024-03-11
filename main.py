@@ -31,17 +31,17 @@ def parse():
 
     parser.add_argument("-s", "--sample_name", type=str, required=bool, help="Name of the sample to process.")
     parser.add_argument("--base", type=str, required=bool, help="Path to sample folder.")
-    parser.add_argument("--spillover_folder", type=str, help="Path to spillover measurements. Will be skipped unless defined.")
-    parser.add_argument("--docker_folder", type=str, help="Path to store temporary data during spillover compensation. Required for spillover compensation.")
+    parser.add_argument("--spillover_folder", default=None, type=str, help="Path to spillover measurements. Will be skipped unless defined.")
+    parser.add_argument("--docker_folder", default=None, type=str, help="Path to store temporary data during spillover compensation. Required for spillover compensation.")
     parser.add_argument("--registration_scale", default=1., type=float, help="Scale for SIFT-registration.")
     parser.add_argument("--segmentation_diameter", type=int, required=bool, help="Average diameter used in cellpose semgentation. ")
-    parser.add_argument("--backgroundcorrection_folder", type=str, help="Path to ilastik background/foreground classifiers. Will be skipped unless defined.")
+    parser.add_argument("--backgroundcorrection_folder", default=None, type=str, help="Path to ilastik background/foreground classifiers. Will be skipped unless defined.")
     parser.add_argument("--save_dir", type=str, required=bool, help="Path to write results.")
-    parser.add_argument("--refine_threshold", type=float, required=bool, help="Threshold used for refinement of mask. Will be skipped, unless defined."),
+    parser.add_argument("--refine_threshold", default=None, required=bool, help="Threshold used for refinement of mask. Will be skipped, unless defined."),
     parser.add_argument("--segmentation_model", type=str, required=bool, help="Path to cellpose segmentation model."),
     parser.add_argument("--log_path", type=str, required=bool, help="Path to write log files.")
-    parser.add_argument("--perform_dimr", default=True, help="Skip DIMR hot pixel removal.")
-    
+    parser.add_argument("--perform_dimr", action="store_false", help="Skip DIMR hot pixel removal.")
+    args = parser.parse_args()
     
     for arg in vars(args):
         if getattr(args, arg) == 'none' or getattr(args, arg) == 'None':
@@ -54,7 +54,7 @@ def parse():
 if __name__ == "__main__":
     script_path = os.path.abspath(__file__)
     script_dir = os.path.dirname(script_path)
-    debug_file = (os.path.join(script_dir, "debug_file.json")) #None
+    debug_file = None#(os.path.join(script_dir, "debug_file.json")) 
     
     if debug_file:
         with open(debug_file, 'rb') as fh:
@@ -64,8 +64,6 @@ if __name__ == "__main__":
                 setattr(args, k, v)
     else:
         args = parse()
-
-    sample_name = args.sample_name
         
     setup_logger(args.sample_name, args.log_path)    
     
@@ -108,7 +106,7 @@ if __name__ == "__main__":
             segmentation_masks, refined_segmentation_masks = segmenter.segment(
                 mod0.image_stack[mod0.stack_channels == "IF1_DAPI"].squeeze(), 
                 eval_kwargs={"diameter": args.segmentation_diameter},
-                refine_threshold=args.refine_threshold)
+                refine_threshold=float(args.refine_threshold))
         
             small_segmentation_masks = registerer.warp(segmentation_masks, mod1.nuclear_image.squeeze().shape, registerer.h_mov2fix, interpolation=cv2.INTER_NEAREST)
             small_refined_segmentation_masks = registerer.warp(refined_segmentation_masks, mod1.nuclear_image.squeeze().shape, registerer.h_mov2fix, interpolation=cv2.INTER_NEAREST)
@@ -137,7 +135,7 @@ if __name__ == "__main__":
             segmentation_masks = segmenter.segment(
                 mod0.image_stack[mod0.stack_channels == "IF1_DAPI"].squeeze(), 
                 eval_kwargs={"diameter": args.segmentation_diameter},
-                refine_threshold=None)
+                refine_threshold=args.refine_threshold)
         
             small_segmentation_masks = registerer.warp(segmentation_masks, mod1.nuclear_image.squeeze().shape, registerer.h_mov2fix, interpolation=cv2.INTER_NEAREST)
 
@@ -186,7 +184,7 @@ if __name__ == "__main__":
         
     logger.debug(f"REMAINING KEYS: {list(sample.data.keys())}")
     
-    if args.perform_dimr is not None:
+    if args.perform_dimr:
     
         for roi, data in sample.data.items():
             

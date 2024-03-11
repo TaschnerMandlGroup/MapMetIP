@@ -8,6 +8,5 @@
     "save_dir": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_TestDataset/BM/results",
     "refine_threshold": 0.12,
     "segmentation_model":"/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_models/BM/segmentation_model/CP_BM",
-    "log_path": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_TestDataset/BM/results"
+    "log_path": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_TestDataset/BM/results",
 }
-

@@ -59,7 +59,7 @@ if __name__ == "__main__":
             segmentation_diameter = 31
             backgroundcorrection_folder = os.path.join(args.model_path, "TU/BC_classifiers")
             segmentation_model = os.path.join(args.model_path, "TU/segmentation_model/CP_TU")
-            refine_threshold = "None"
+            refine_threshold = None
 
 
         try:
