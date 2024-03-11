@@ -73,7 +73,6 @@ rm <path/to/extract/directory>/MapMetIP_models.zip
 
 ### Download test dataset
 We prepared a small test dataset with one representative primary tumor and bone marrow sample to be used in the notebooks for demonstration purposes.
-[comment]: <> (also possible like this: zenodo_get 10.5281/zenodo.10801832)
 Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
 ```shell
 wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/34280/files/MapMetIP_TestDataset.zip
