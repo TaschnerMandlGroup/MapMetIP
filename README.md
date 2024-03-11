@@ -63,7 +63,7 @@ git clone --branch v1.0.0 https://github.com/PENGLU-WashU/IMC_Denoise.git
 
 ### Download cellpose models, spillover measurements and ilastik classifiers
 In order to be able to use the segmentation, spillover compensation and background correction within `MapMetIP`, the segmentation models, the spillover measurements and background/foreground classifiers are required. We will download the fine-tuned cellpose models, spillover measurements and ilastik-trained background/foreground classifiers from `zenodo`. 
-[comment]: <> (also possible like this: zenodo_get 10.5281/zenodo.10801832)
+<!--also possible like this: zenodo_get 10.5281/zenodo.10801832-->
 Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
 ```shell
 wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/34280/files/MapMetIP_models.zip
