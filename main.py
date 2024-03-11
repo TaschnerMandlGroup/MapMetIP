@@ -37,7 +37,7 @@ def parse():
     parser.add_argument("--segmentation_diameter", type=int, required=bool, help="Average diameter used in cellpose semgentation. ")
     parser.add_argument("--backgroundcorrection_folder", default=None, type=str, help="Path to ilastik background/foreground classifiers. Will be skipped unless defined.")
     parser.add_argument("--save_dir", type=str, required=bool, help="Path to write results.")
-    parser.add_argument("--refine_threshold", default=None, required=bool, help="Threshold used for refinement of mask. Will be skipped, unless defined."),
+    parser.add_argument("--refine_threshold", default=None, help="Threshold used for refinement of mask. Will be skipped, unless defined."),
     parser.add_argument("--segmentation_model", type=str, required=bool, help="Path to cellpose segmentation model."),
     parser.add_argument("--log_path", type=str, required=bool, help="Path to write log files.")
     parser.add_argument("--perform_dimr", action="store_false", help="Skip DIMR hot pixel removal.")
@@ -54,7 +54,7 @@ def parse():
 if __name__ == "__main__":
     script_path = os.path.abspath(__file__)
     script_dir = os.path.dirname(script_path)
-    debug_file = None#(os.path.join(script_dir, "debug_file.json")) 
+    debug_file = None #(os.path.join(script_dir, "debug_file.json")) 
     
     if debug_file:
         with open(debug_file, 'rb') as fh:

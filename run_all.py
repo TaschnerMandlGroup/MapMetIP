@@ -22,7 +22,8 @@ def parse():
     parser.add_argument("-s", "--sample_list", nargs='+', required=bool, help="Define samples to process.")
     parser.add_argument("--data_path", type=str, required=bool, help="Path to the folder with downloaded raw_data.")
     parser.add_argument("--model_path", type=str, required=bool, help="Path to the folder with downloaded models/classifiers.")
-    parser.add_argument("--save_dir", type=str, required=bool, help="Path to write results and logs. Will be overwritten in consecutive runs.")
+    parser.add_argument("--save_dir", type=str, required=bool, help="Path to write results. Will be overwritten in consecutive runs.")
+    parser.add_argument("--log_path", type=str, required=bool, help="Path to write logs. Will be overwritten in consecutive runs.")
     args = parser.parse_args()
     
     return args
@@ -33,7 +34,7 @@ if __name__ == "__main__":
     samples = args.sample_list
     base = args.data_path
     save_dir = args.save_dir
-    log_path = args.save_dir
+    log_path = args.log_path
 
     spillover_folder = os.path.join(args.model_path, "spillover")
     docker_folder = os.path.join(spillover_folder, "out")

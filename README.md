@@ -100,12 +100,12 @@ Notebooks, demonstrating each step of the pipeline on the primary tumor sample (
 To run the complete image processing pipeline on a defined sample:
 ```shell
 cd MapMetIP
-python3 run_all.py -s <sample_name> --data_path <path/to>/MapMetIP_TestDataset/raw_data --model_path <path/to>/MapMetIP_models --save_dir <path/to/results_folder>
+python3 run_all.py -s <sample_name> --data_path <path/to>/MapMetIP_TestDataset/raw_data --model_path <path/to>/MapMetIP_models --save_dir <path/to/save/results> --log_path <path/to/save/logs>
 ```
 or on a list of samples
 ```shell
 cd MapMetIP
-python3 run_all.py -s <sample_name1> <sample_2> <sample_name3> --data_path <path/to>/MapMetIP_TestDataset/raw_data --model_path <path/to>/MapMetIP_models --save_dir <path/to/results_folder>
+python3 run_all.py -s <sample_name1> <sample_2> <sample_name3> --data_path <path/to>/MapMetIP_TestDataset/raw_data --model_path <path/to>/MapMetIP_models --save_dir <path/to/save/results> --log_path <path/to/save/logs>
 ```
 ## Contributors
 
