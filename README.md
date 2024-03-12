@@ -87,6 +87,33 @@ wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/34123/fil
 unzip <path/to/extract/directory>/MapMet_FullDataset.zip -d <path/to/extract/directory>
 rm <path/to/extract/directory>/MapMet_FullDataset.zip
 ```
+## Docker 
+To run MapMetIP within a docker container (and skip all steps above), set up a reproducible environment using the provided Dockerfile. 
+### Build docker image
+First clone the repository:
+```shell
+git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
+```
+then build the docker image.
+```shell
+cd MapMetIP
+docker build -t mapmet_ip .
+```
+### Pull R-based docker for spillover compensation
+The docker-based implementation assumes that the R-based docker image for spillover compensation was pulled from docker hub. 
+```shell
+docker image pull lazdaria/spillovercomp
+```
+### Start container in interactive mode
+Then start the mapmet_ip container, mounting
+- the Docker daemon socket to ensure that the the R-based docker container for spillover compensation can be started from within
+- the MapMetIP project directory and
+- the data volume (`/path/to/data` for storing raw data, models and results)
+```shell
+docker run -p 4004:8888 -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)":/usr/src/app/MapMetIP  -v </path/to/data>:/data -it mapmet_ip
+``` 
+
+After docker container setup, you can process samples as explained [below](#usage).
 
 ## Usage
 
@@ -96,16 +123,21 @@ Notebooks, demonstrating each step of the pipeline on the primary tumor sample (
 
 ### Process multiple samples
 
-To run the complete image processing pipeline on a defined sample:
+First, make sure the conda environment is activated. 
+```shell
+conda activate mapmet_ip
+```
+To run the complete image processing pipeline on a defined sample, run the command below. For Docker-based implementation, adapt paths according to the container's file structure in `/data`.
 ```shell
 cd MapMetIP
 python3 run_all.py -s <sample_name> --data_path <path/to>/MapMetIP_TestDataset/raw_data --model_path <path/to>/MapMetIP_models --save_dir <path/to/save/results> --log_path <path/to/save/logs>
 ```
-or on a list of samples
+To run the complete image processing pipeline on a list of samples, run the command below.
 ```shell
 cd MapMetIP
 python3 run_all.py -s <sample_name1> <sample_2> <sample_name3> --data_path <path/to>/MapMetIP_TestDataset/raw_data --model_path <path/to>/MapMetIP_models --save_dir <path/to/save/results> --log_path <path/to/save/logs>
 ```
+
 ## Contributors
 
 [Simon Gutwein](https://github.com/SimonBon/)

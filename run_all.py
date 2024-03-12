@@ -64,8 +64,10 @@ if __name__ == "__main__":
 
 
         try:
-            
-            return_value = subprocess.call(f"cd ~/src/MapMetIP; python3 main.py -s {sample} \
+            script_path = os.path.abspath(__file__)
+            script_dir = os.path.dirname(script_path)
+
+            return_value = subprocess.call(f"cd {script_dir}; python3 main.py -s {sample} \
                                             --base {base} \
                                             --segmentation_diameter {segmentation_diameter} \
                                             --docker_folder {docker_folder} \
