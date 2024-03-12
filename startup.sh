@@ -22,7 +22,11 @@ mkdir -p /data/results
 
 echo "Starting jupyter notebook"
 #Notebook authentication disabled - adapt later - https://jupyter-notebook.readthedocs.io/en/6.2.0/security.html
-jupyter lab notebook --notebook-dir=/usr/src/app/MapMetIP --ip='0.0.0.0' --port=8888 --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''
+jupyter lab --notebook-dir=/usr/src/app/MapMetIP --ip='0.0.0.0' --port=8888 --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''
+
+#jupyter lab --notebook-dir=/usr/src/app/MapMetIP --ip='0.0.0.0' --port=8888 --no-browser --allow-root
+#for shortkeys in jupyterlab use:
+#conda install jedi=0.17
 
 # Keep the container running after startup tasks are complete
 exec "$@"

@@ -6,6 +6,7 @@ from glob import glob
 import logging
 import numpy as np
 import sys
+import docker
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -37,10 +38,13 @@ def spillover_correction(sample, spillover_matrix_path, out, roi=None):
     logger.debug(f"files_before: {files_before}")
     logger.debug(f"files_created: {files_created}")
     
+    client = docker.from_env()
     try:
-    
-        res0 = subprocess.call(f"docker run --rm -v {out}:/home/tmp -v {spillover_matrix_path}:/home/SPILLOVER lazdaria/spillovercomp Rscript /home/generate_spillovermatrix.R", shell=True)
         
+        container = client.containers.run("lazdaria/spillovercomp", "Rscript /home/generate_spillovermatrix.R", volumes={out: {'bind': '/home/tmp', 'mode': 'rw'}, spillover_matrix_path: {'bind': '/home/SPILLOVER', 'mode': 'rw'}}, stdout=True, stderr=True, remove=True)
+        result = container.wait()
+        res0 = result['StatusCode']
+
         if res0 == 0:
             logger.debug(f"Successfull generate_spillovermatrix.R: {res0}")
             logger.debug(f"result generate_spillovermatrix.R Exit Code {res0}")
@@ -48,9 +52,10 @@ def spillover_correction(sample, spillover_matrix_path, out, roi=None):
         else:
             logger.warning(f"Error in generate_spillovermatrix.R with Exit Code:{res0}")
 
-        
-        res1 = subprocess.call(f"docker run --rm -v {out}:/home/tmp -v {spillover_matrix_path}:/home/SPILLOVER lazdaria/spillovercomp Rscript /home/spillover_compensation.R", shell=True)
-        
+        container = client.containers.run("lazdaria/spillovercomp", "Rscript /home/spillover_compensation.R", volumes={out: {'bind': '/home/tmp', 'mode': 'rw'}, spillover_matrix_path: {'bind': '/home/SPILLOVER', 'mode': 'rw'}}, stdout=True, stderr=True, remove=True)
+        result = container.wait()
+        res1 = result['StatusCode']
+
         if res1 == 0:
             logger.debug(f"Successfull spillover_compensation.R")
             logger.debug(f"result spillover_compensation.R Exit Code {res1}")

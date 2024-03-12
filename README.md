@@ -54,10 +54,15 @@ docker image pull lazdaria/spillovercomp
 ```
 
 ### Clone IMC-Denoise github repository for DIMR hot-pixel removal
-To be able to use DIMR hot-poxel removal, clone the [IMC-Denoise github repository]() to the parent directory of MapMetIP.
+To be able to use DIMR hot-poxel removal, clone the [IMC-Denoise github repository]() to the parent directory of MapMetIP. 
+!!!!Wont work - add path to sys.path - due to problem with required Tensorflow version !!!
 ```shell
 cd ..
 git clone --branch v1.0.0 https://github.com/PENGLU-WashU/IMC_Denoise.git
+```
+In case problems with Tensorflow versions, occur, add the path to the IMC_Denoise parent directory to your `~/.bashrc`:
+```shell
+export PYTHONPATH="${PYTHONPATH}:{pwd}}"
 ```
 ## Download data
 
@@ -109,8 +114,10 @@ Then start the mapmet_ip container, mounting
 - the Docker daemon socket to ensure that the the R-based docker container for spillover compensation can be started from within
 - the MapMetIP project directory and
 - the data volume (`/path/to/data` for storing raw data, models and results)
+and adding a security token.
+
 ```shell
-docker run -p 4004:8888 -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)":/usr/src/app/MapMetIP  -v </path/to/data>:/data -it mapmet_ip
+docker run -e "JUPYTER_TOKEN=<your_security_token>" -p 4004:8888 -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)":/usr/src/app/MapMetIP  -v </path/to/data>:/data -it mapmet_ip
 ``` 
 
 After docker container setup, you can process samples as explained [below](#usage).

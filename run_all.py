@@ -39,7 +39,7 @@ if __name__ == "__main__":
     spillover_folder = os.path.join(args.model_path, "spillover")
     docker_folder = os.path.join(spillover_folder, "out")
     
-    logger = setup_logger(args.save_dir)
+    logger = setup_logger(args.log_path)
     
     for sample in samples:
         
