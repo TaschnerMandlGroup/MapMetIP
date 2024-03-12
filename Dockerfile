@@ -10,6 +10,7 @@ WORKDIR /usr/src/app
 
 # Clone the external repository into the parent directory
 RUN git clone --branch v1.0.0 https://github.com/PENGLU-WashU/IMC_Denoise.git
+ENV PYTHONPATH="${PYTHONPATH}:/usr/src/app/IMC_Denoise"
 
 # Update Conda
 RUN conda update -n base -c defaults conda
@@ -17,7 +18,7 @@ RUN conda update -n base -c defaults conda
 # Create the environment from the env.yml file
 COPY env.yml /usr/src/app/env.yml
 RUN conda env create -f env.yml
-RUN conda install -n mapmet_ip -c conda-forge jupyter
+RUN conda install -n mapmet_ip -c conda-forge jupyterlab
 
 # Copy the startup script into the container
 COPY startup.sh /usr/src/app/startup.sh
