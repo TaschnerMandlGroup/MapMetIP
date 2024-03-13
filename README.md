@@ -114,20 +114,20 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
 + <details>
   <summary><strong>Process multiple samples from CL/strong></summary>
 
-First, make sure the conda environment is activated. 
-```bash
-conda activate mapmet_ip
-```
-To run the complete image processing pipeline on a defined sample, run the command below. For Docker-based implementation, adapt paths according to the container's file structure in `/data`.
-```bash
-cd MapMetIP
-python3 run_all.py -s <sample_name> --data_path <path/to>/MapMetIP_TestDataset/raw_data --model_path <path/to>/MapMetIP_models --save_dir <path/to/save/results> --log_path <path/to/save/logs>
-```
-To run the complete image processing pipeline on a list of samples, run the command below.
-```bash
-cd MapMetIP
-python3 run_all.py -s <sample_name1> <sample_2> <sample_name3> --data_path <path/to>/MapMetIP_TestDataset/raw_data --model_path <path/to>/MapMetIP_models --save_dir <path/to/save/results> --log_path <path/to/save/logs>
-```
+  First, make sure the conda environment is activated. 
+  ```bash
+  conda activate mapmet_ip
+  ```
+  To run the complete image processing pipeline on a defined sample, run the command below. For Docker-based implementation, adapt paths according to the container's file structure in `/data`.
+  ```bash
+  cd MapMetIP
+  python3 run_all.py -s <sample_name> --data_path <path/to>/MapMetIP_TestDataset/raw_data --model_path <path/to>/MapMetIP_models --save_dir <path/to/save/results> --log_path <path/to/save/logs>
+  ```
+  To run the complete image processing pipeline on a list of samples, run the command below.
+  ```bash
+  cd MapMetIP
+  python3 run_all.py -s <sample_name1> <sample_2> <sample_name3> --data_path <path/to>/MapMetIP_TestDataset/raw_data --model_path <path/to>/MapMetIP_models --save_dir <path/to/save/results> --log_path <path/to/save/logs>
+  ```
 
 ## Contributors
 
