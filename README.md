@@ -1,14 +1,12 @@
 <img src="https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/docs/img/logo.png" align="right" alt="Logo" width="55" />
 
 # MapMet - Image Processing Pipeline
+---
 [comment]: <> (repo-specific shields will work once the repo is online)
 ![Python Version](https://img.shields.io/badge/python-3.10.9-blue)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10801832.svg)](https://doi.org/10.5281/zenodo.10801832)
 ![Suggestions Welcome](https://img.shields.io/badge/suggestions-welcome-green)
 
-A pipeline for processing multi-modal (IF and IMC) multiplexed images within the MapMet (Mapping Metastases in neuroblastoma) project. 
-
----
 
 ## Overview
 This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we use 3-plex immmunofluorescence (IF) microscopy and 41-plex imaging mass cytometry (IMC) to spatially and temporally map primary and metastatic neuroblastoma. The pipeline can be largely divided into the following steps:
