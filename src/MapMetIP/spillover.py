@@ -82,7 +82,7 @@ def spillover_correction(sample, spillover_matrix_path, out, roi=None):
 
 def check_DooD(in_path, out_path):
     # Check whether spillover docker is being started out of another container
-    dood_path = os.getenv("DooD_path")
+    dood_path = os.getenv("DOODPATH")
     if dood_path:
         spillover_folder = os.path.join(dood_path, "MapMetIP_models/spillover")
         out_folder = os.path.join(spillover_folder, "out")

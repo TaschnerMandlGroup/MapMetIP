@@ -124,7 +124,7 @@ Then start the mapmet_ip container, mounting
 The R-based docker container is launched by the host's Docker daemon and hence requires the aboslute path to the host data volume (`/absolute/path/to/data`).
 <!--another option is to have the spillover data already in the image and then start the container without mounts - or download the data within image -->
 ```bash
-docker run -u $(id -u):$(id -g) -e "DooD_path=</absolute/path/to/data>" -p 4004:8888 -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)":/usr/src/app/MapMetIP  -v </path/to/data>:/data -it mapmet_ip
+docker run -e "DOODPATH=</absolute/path/to/data>" -p 8888:8888 -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)":/usr/src/app/MapMetIP  -v </path/to/data>:/data -it mapmet_ip
 ``` 
 
 After docker container setup, you can process samples as explained [below](#usage).
