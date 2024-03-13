@@ -120,6 +120,7 @@ Then start the mapmet_ip container, mounting
 - the Docker daemon socket to ensure that the the R-based docker container for spillover compensation can be started from within
 - the MapMetIP project directory and
 - the data volume (`/path/to/data` for storing raw data, models and results)
+
 The R-based docker container is launched by the host's Docker daemon and hence requires the aboslute path to the host data volume (`/absolute/path/to/data`).
 <!--another option is to have the spillover data already in the image and then start the container without mounts - or download the data within image -->
 ```bash
