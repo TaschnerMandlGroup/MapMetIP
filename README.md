@@ -16,7 +16,38 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
 
 ## Installation
 + <details>
-  <summary><strong>Import the module</strong></summary>
+  <summary><strong>Docker</strong></summary>
+  To run MapMetIP within a docker container (and skip all steps above), set up a reproducible environment using the provided Dockerfile. 
+### Build docker image
+First clone the repository:
+```bash
+git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
+```
+then build the docker image.
+```bash
+cd MapMetIP
+docker build -t mapmet_ip .
+```
+### Pull R-based docker for spillover compensation
+The docker-based implementation assumes that the R-based docker image for spillover compensation was pulled from docker hub. 
+```bash
+docker image pull lazdaria/spillovercomp
+```
+
+### Start container in interactive mode
+Then start the mapmet_ip container, mounting
+- the Docker daemon socket to ensure that the the R-based docker container for spillover compensation can be started from within
+- the MapMetIP project directory and
+- the data volume (`/path/to/data` for storing raw data, models and results)
+
+The R-based docker container is launched by the host's Docker daemon and hence requires the aboslute path to the host data volume (`/absolute/path/to/data`).
+<!--another option is to have the spillover data already in the image and then start the container without mounts - or download the data within image -->
+```bash
+docker run -e "DOODPATH=</absolute/path/to/data>" -p 8888:8888 -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)":/usr/src/app/MapMetIP  -v </path/to/data>:/data -it mapmet_ip
+``` 
+
+After docker container setup, you can process samples as explained [below](#usage).
+  
 + <details>
   <summary><strong>Import the module</strong></summary>
 
@@ -81,37 +112,7 @@ wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/34881/fil
 unzip <path/to/extract/directory>/MapMet_FullDataset.zip -d <path/to/extract/directory>
 rm <path/to/extract/directory>/MapMet_FullDataset.zip
 ```
-## Docker 
-To run MapMetIP within a docker container (and skip all steps above), set up a reproducible environment using the provided Dockerfile. 
-### Build docker image
-First clone the repository:
-```bash
-git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
-```
-then build the docker image.
-```bash
-cd MapMetIP
-docker build -t mapmet_ip .
-```
-### Pull R-based docker for spillover compensation
-The docker-based implementation assumes that the R-based docker image for spillover compensation was pulled from docker hub. 
-```bash
-docker image pull lazdaria/spillovercomp
-```
 
-### Start container in interactive mode
-Then start the mapmet_ip container, mounting
-- the Docker daemon socket to ensure that the the R-based docker container for spillover compensation can be started from within
-- the MapMetIP project directory and
-- the data volume (`/path/to/data` for storing raw data, models and results)
-
-The R-based docker container is launched by the host's Docker daemon and hence requires the aboslute path to the host data volume (`/absolute/path/to/data`).
-<!--another option is to have the spillover data already in the image and then start the container without mounts - or download the data within image -->
-```bash
-docker run -e "DOODPATH=</absolute/path/to/data>" -p 8888:8888 -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)":/usr/src/app/MapMetIP  -v </path/to/data>:/data -it mapmet_ip
-``` 
-
-After docker container setup, you can process samples as explained [below](#usage).
 
 ## Usage
 
