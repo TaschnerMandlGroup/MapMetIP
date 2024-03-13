@@ -13,13 +13,12 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
 4. **DIMR hot pixel removal** according to [[4]](https://github.com/PENGLU-WashU/IMC_Denoise)
 5. **Background correction and normalization** using background/foreground classifiers trained in [Ilastik](https://github.com/ilastik/ilastik/tree/main) [5] - individual models were trained for each marker and tissue type (primary tumor/bone marrow)
 6. **Feature Extraction**: extraction of marker intensity and morphological features
----
 
 ## Installation
 + <details>
-  <summary><strong>1.1. Import the module</strong></summary>
+  <summary><strong>Import the module</strong></summary>
 + <details>
-  <summary><strong>1.1. Import the module</strong></summary>
+  <summary><strong>Import the module</strong></summary>
 
 First clone the repository:
 ```bash
