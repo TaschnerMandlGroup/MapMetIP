@@ -119,7 +119,9 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
 <details>
  <summary><strong>Notebooks for demonstration</strong></summary>
  
- Notebooks, demonstrating each step of the pipeline on the primary tumor sample ([tests/process_TU_sample.ipynb](https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/tests/process_TU_sample.ipynb)) and bone marrow sample ([tests/process_BM_sample.ipynb](https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/tests/process_BM_sample.ipynb)) from the test dataset, are provided. 
+ Notebooks, demonstrating each step of the pipeline on the primary tumor sample are provided:
+ - Demonstration of pipeline on one representative tumor sample ([tests/process_TU_sample.ipynb](https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/tests/process_TU_sample.ipynb))
+ - Demonstration of pipeline on one representative bone marrow sample([tests/process_BM_sample.ipynb](https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/tests/process_BM_sample.ipynb)) 
  </details>
 <details>
  <summary><strong>Process multiple samples from CL</strong></summary>
