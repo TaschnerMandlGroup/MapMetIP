@@ -152,15 +152,15 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
 ## Citation
 Please cite the following paper when using `MapMetIP`:
 
->  Lazic, D., Gutwein, S., Humhal V. et al. Mapping Metastases in Neuroblastoma. Nat Cancer (2024). https://doi.org/DOI
+>  Lazic, D., Gutwein, S., Humhal V. et al. Title to be selected. Journal (2024). https://doi.org/DOI
 
     @article{Lazic2024,
         author = {Lazic, Daria and Gutwein, Simon and },
-        title = {Mapping Metastases in Neuroblastoma},
+        title = {Title to be selected},
         year = {2024},
         doi = {DOI},
         URL = {URL},
-        journal = {Nature Cancer - let's hope}
+        journal = {Journal}
     }
 
 ## References
