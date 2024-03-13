@@ -3,3 +3,4 @@
 *.png
 */MapMetIP.egg-info/*
 *_checkpoints/
+*.vscode
