@@ -1,12 +1,10 @@
 <img src="https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/docs/img/logo.png" align="right" alt="Logo" width="55" />
 
 # MapMet - Image Processing Pipeline
----
 [comment]: <> (repo-specific shields will work once the repo is online)
 ![Python Version](https://img.shields.io/badge/python-3.10.9-blue)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10801832.svg)](https://doi.org/10.5281/zenodo.10801832)
 ![Suggestions Welcome](https://img.shields.io/badge/suggestions-welcome-green)
-
 
 ## Overview
 This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we use 3-plex immmunofluorescence (IF) microscopy and 41-plex imaging mass cytometry (IMC) to spatially and temporally map primary and metastatic neuroblastoma. The pipeline can be largely divided into the following steps:
@@ -15,7 +13,7 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
 3. **Spillover compensation** of IMC images according to [[3]](https://github.com/BodenmillerGroup/cyTOFcompensation)
 4. **DIMR hot pixel removal** according to [[4]](https://github.com/PENGLU-WashU/IMC_Denoise)
 5. **Background correction and normalization** using background/foreground classifiers trained in [Ilastik](https://github.com/ilastik/ilastik/tree/main) [5] - individual models were trained for each marker and tissue type (primary tumor/bone marrow)
-
+---
 
 * [Installation](#installation)
 * [Download data](#download-data)
