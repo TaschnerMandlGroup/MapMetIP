@@ -15,7 +15,7 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
 6. **Feature Extraction**: extraction of marker intensity and morphological features
 
 ## Installation
-+ <details>
+ <details>
   <summary><strong>Docker</strong></summary>
   Clone the repository.
   ```bash
@@ -42,7 +42,7 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
   ```
   </details>
     
-+ <details>
+ <details>
   <summary><strong>Manual</strong></summary>
 
   First clone the repository:
