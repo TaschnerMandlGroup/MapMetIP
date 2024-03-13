@@ -19,7 +19,7 @@ RUN conda update -n base -c defaults conda
 COPY env.yml /usr/src/app/env.yml
 RUN conda env create -f env.yml
 
-RUN conda install -n mapmet_ip -c conda-forge jupyterlab
+RUN conda install -n mapmet_ip -c conda-forge jupyterlab=3 "ipykernel>=6" xeus-python
 ENV SHELL=/bin/bash
 
 # Copy the startup script into the container

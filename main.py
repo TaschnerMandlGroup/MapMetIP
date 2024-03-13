@@ -54,7 +54,7 @@ def parse():
 if __name__ == "__main__":
     script_path = os.path.abspath(__file__)
     script_dir = os.path.dirname(script_path)
-    debug_file = None #(os.path.join(script_dir, "debug_file.json")) 
+    debug_file = None #(os.path.join(script_dir, "debug_file.json"))
     
     if debug_file:
         with open(debug_file, 'rb') as fh:
@@ -62,6 +62,10 @@ if __name__ == "__main__":
             args = DEBUGGER()
             for k, v in d.items():
                 setattr(args, k, v)
+
+        for arg in vars(args):
+            if getattr(args, arg) == 'none' or getattr(args, arg) == 'None':
+                setattr(args, arg, None)
     else:
         args = parse()
         
@@ -164,6 +168,7 @@ if __name__ == "__main__":
         del sample.data[key]
     
     if args.spillover_folder is not None:
+
         sample = spillover_correction(sample, args.spillover_folder, args.docker_folder)
     
     for roi in sample.data.keys():

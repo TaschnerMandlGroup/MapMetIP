@@ -31,47 +31,53 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
 ## Installation
 
 First clone the repository:
-```shell
+```bash
 git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
 ```
 It is recommended to install `MapMetIP` into a conda environment together with other necessary packages. If you are new to conda, please refer to these [instructions](https://biapol.github.io/blog/mara_lampert/getting_started_with_mambaforge_and_python/readme.html) first. 
-```shell
+```bash
 cd MapMetIP
 conda env create -f env.yml
 ```
 You can then activate the environment:
-```shell
+```bash
 conda activate mapmet_ip
 ```
 And install `MapMetIP`
-```shell
+```bash
 pip install -e .
 ```
 ### Pull R-based docker image for spillover compensation
 Spillover compensation is executed in an R-based docker container. In case you need to setup docker, follow these [instructions](https://docs.docker.com/get-started/overview/). Then, pull our image from docker hub. 
-```shell
+```bash
 docker image pull lazdaria/spillovercomp
+```
+And download the required spillover measurements to the root of the MapMetIP folder: 
+```bash
+wget https://sandbox.zenodo.org/records/34878/files/MapMetIP_spillover.zip
+unzip MapMetIP_spillover.zip 
+rm MapMetIP_spillover.zip
 ```
 
 ### Clone IMC-Denoise github repository for DIMR hot-pixel removal
 To be able to use DIMR hot-poxel removal, clone the [IMC-Denoise github repository]() to the parent directory of MapMetIP. 
 !!!!Wont work - add path to sys.path - due to problem with required Tensorflow version !!!
-```shell
+```bash
 cd ..
 git clone --branch v1.0.0 https://github.com/PENGLU-WashU/IMC_Denoise.git
 ```
 In case problems with Tensorflow versions, occur, add the path to the IMC_Denoise parent directory to your `~/.bashrc`:
-```shell
+```bash
 export PYTHONPATH="${PYTHONPATH}:{pwd}}"
 ```
 ## Download data
 
 ### Download cellpose models, spillover measurements and ilastik classifiers
-In order to be able to use the segmentation, spillover compensation and background correction within `MapMetIP`, the segmentation models, the spillover measurements and background/foreground classifiers are required. We will download the fine-tuned cellpose models, spillover measurements and ilastik-trained background/foreground classifiers from `zenodo`. 
+In order to be able to use the segmentation, spillover compensation and background correction within `MapMetIP`, the fine-tuned cellpose models, spillover measurements and ilastik-trained background/foreground classifiers have to be downloaded from `zenodo`. 
 <!--also possible like this: zenodo_get 10.5281/zenodo.10801832-->
 Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
-```shell
-wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/34280/files/MapMetIP_models.zip
+```bash
+wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/34881/files/MapMetIP_models.zip
 unzip <path/to/extract/directory>/MapMetIP_models.zip -d <path/to/extract/directory>
 rm <path/to/extract/directory>/MapMetIP_models.zip
 ```
@@ -79,16 +85,16 @@ rm <path/to/extract/directory>/MapMetIP_models.zip
 ### Download test dataset
 We prepared a small test dataset with one representative primary tumor and bone marrow sample to be used in the notebooks for demonstration purposes.
 Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
-```shell
-wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/34280/files/MapMetIP_TestDataset.zip
+```bash
+wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/34881/files/MapMetIP_TestDataset.zip
 unzip <path/to/extract/directory>/MapMetIP_TestDataset.zip -d <path/to/extract/directory>
 rm <path/to/extract/directory>/MapMetIP_TestDataset.zip
 ```
 
 ### Download full dataset
 To process the entire dataset, described in Lazic et al., download the complete dataset. Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
-```shell
-wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/34123/files/MapMet_FullDataset.zip #to be uploaded
+```bash
+wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/34881/files/MapMet_FullDataset.zip #to be uploaded
 unzip <path/to/extract/directory>/MapMet_FullDataset.zip -d <path/to/extract/directory>
 rm <path/to/extract/directory>/MapMet_FullDataset.zip
 ```
@@ -96,28 +102,29 @@ rm <path/to/extract/directory>/MapMet_FullDataset.zip
 To run MapMetIP within a docker container (and skip all steps above), set up a reproducible environment using the provided Dockerfile. 
 ### Build docker image
 First clone the repository:
-```shell
+```bash
 git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
 ```
 then build the docker image.
-```shell
+```bash
 cd MapMetIP
 docker build -t mapmet_ip .
 ```
 ### Pull R-based docker for spillover compensation
 The docker-based implementation assumes that the R-based docker image for spillover compensation was pulled from docker hub. 
-```shell
+```bash
 docker image pull lazdaria/spillovercomp
 ```
+
 ### Start container in interactive mode
 Then start the mapmet_ip container, mounting
 - the Docker daemon socket to ensure that the the R-based docker container for spillover compensation can be started from within
 - the MapMetIP project directory and
 - the data volume (`/path/to/data` for storing raw data, models and results)
-and adding a security token.
-
-```shell
-docker run -e "JUPYTER_TOKEN=<your_security_token>" -p 4004:8888 -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)":/usr/src/app/MapMetIP  -v </path/to/data>:/data -it mapmet_ip
+The R-based docker container is launched by the host's Docker daemon and hence requires the aboslute path to the host data volume (`/absolute/path/to/data`).
+<!--another option is to have the spillover data already in the image and then start the container without mounts - or download the data within image -->
+```bash
+docker run -u $(id -u):$(id -g) -e "DooD_path=</absolute/path/to/data>" -p 4004:8888 -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)":/usr/src/app/MapMetIP  -v </path/to/data>:/data -it mapmet_ip
 ``` 
 
 After docker container setup, you can process samples as explained [below](#usage).
@@ -131,16 +138,16 @@ Notebooks, demonstrating each step of the pipeline on the primary tumor sample (
 ### Process multiple samples
 
 First, make sure the conda environment is activated. 
-```shell
+```bash
 conda activate mapmet_ip
 ```
 To run the complete image processing pipeline on a defined sample, run the command below. For Docker-based implementation, adapt paths according to the container's file structure in `/data`.
-```shell
+```bash
 cd MapMetIP
 python3 run_all.py -s <sample_name> --data_path <path/to>/MapMetIP_TestDataset/raw_data --model_path <path/to>/MapMetIP_models --save_dir <path/to/save/results> --log_path <path/to/save/logs>
 ```
 To run the complete image processing pipeline on a list of samples, run the command below.
-```shell
+```bash
 cd MapMetIP
 python3 run_all.py -s <sample_name1> <sample_2> <sample_name3> --data_path <path/to>/MapMetIP_TestDataset/raw_data --model_path <path/to>/MapMetIP_models --save_dir <path/to/save/results> --log_path <path/to/save/logs>
 ```

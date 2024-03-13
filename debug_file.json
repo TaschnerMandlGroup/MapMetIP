@@ -1,14 +1,14 @@
 {
     "sample_name": "20220926_20220809_16-005_TU",
-    "base": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_TestDataset/TU/raw_data/",
-    "spillover_folder": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_models/spillover/",
-    "docker_folder": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_models/spillover/out",
+    "base": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/docker_data/MapMetIP_TestDataset/raw_data",
+    "spillover_folder": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/docker_data/MapMetIP_models/spillover/",
+    "docker_folder": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/docker_data/MapMetIP_models/spillover/out",
     "segmentation_diameter": 31,
-    "backgroundcorrection_folder": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_models/TU/BC_classifiers",
-    "save_dir": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_TestDataset/TU/results",
+    "backgroundcorrection_folder": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/docker_data/MapMetIP_models/TU/BC_classifiers",
+    "save_dir": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/docker_data/results",
     "refine_threshold": "None",
-    "segmentation_model":"/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_models/TU/segmentation_model/CP_TU",
-    "log_path": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/MapMetIP_TestDataset/TU/results",
+    "segmentation_model":"/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/docker_data/MapMetIP_models/TU/segmentation_model/CP_TU",
+    "log_path": "/data_isilon_main/isilon_images/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/docker_data/log_files",
     "registration_scale": 1,
     "perform_dimr": "True" 
 

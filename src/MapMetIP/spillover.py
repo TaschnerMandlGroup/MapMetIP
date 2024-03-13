@@ -38,10 +38,18 @@ def spillover_correction(sample, spillover_matrix_path, out, roi=None):
     logger.debug(f"files_before: {files_before}")
     logger.debug(f"files_created: {files_created}")
     
+    #Check if spillover docker is run within another docker container 
+    #Translate path to absolute path of host - since spillover docker is using host's docker daemon
+    #another way would be to:
+    # 1. Copy spillover data into MapMetIP package folder
+    # 2. Mount MapMetIP package folder to volume in lazdaria/spillovercomp 
+    # 3. Use script_path = os.path.abspath(__file__); script_dir = os.path.dirname(script_path) within lazdaria/spillovercomp to get absolute host paths
+    docker_in, docker_out = check_DooD(spillover_matrix_path, out)
+    
     client = docker.from_env()
     try:
         
-        container = client.containers.run("lazdaria/spillovercomp", "Rscript /home/generate_spillovermatrix.R", volumes={out: {'bind': '/home/tmp', 'mode': 'rw'}, spillover_matrix_path: {'bind': '/home/SPILLOVER', 'mode': 'rw'}}, stdout=True, stderr=True, remove=True)
+        container = client.containers.run("lazdaria/spillovercomp", "Rscript /home/generate_spillovermatrix.R", volumes={docker_out: {'bind': '/home/tmp', 'mode': 'rw'}, docker_in: {'bind': '/home/SPILLOVER', 'mode': 'rw'}}, detach=True, remove=True)
         result = container.wait()
         res0 = result['StatusCode']
 
@@ -52,7 +60,7 @@ def spillover_correction(sample, spillover_matrix_path, out, roi=None):
         else:
             logger.warning(f"Error in generate_spillovermatrix.R with Exit Code:{res0}")
 
-        container = client.containers.run("lazdaria/spillovercomp", "Rscript /home/spillover_compensation.R", volumes={out: {'bind': '/home/tmp', 'mode': 'rw'}, spillover_matrix_path: {'bind': '/home/SPILLOVER', 'mode': 'rw'}}, stdout=True, stderr=True, remove=True)
+        container = client.containers.run("lazdaria/spillovercomp", "Rscript /home/spillover_compensation.R", volumes={docker_out: {'bind': '/home/tmp', 'mode': 'rw'}, docker_in: {'bind': '/home/SPILLOVER', 'mode': 'rw'}}, detach=True, remove=True)
         result = container.wait()
         res1 = result['StatusCode']
 
@@ -72,6 +80,17 @@ def spillover_correction(sample, spillover_matrix_path, out, roi=None):
         
     return sample
 
+def check_DooD(in_path, out_path):
+    # Check whether spillover docker is being started out of another container
+    dood_path = os.getenv("DooD_path")
+    if dood_path:
+        spillover_folder = os.path.join(dood_path, "MapMetIP_models/spillover")
+        out_folder = os.path.join(spillover_folder, "out")
+    else:
+        spillover_folder = in_path
+        out_folder = out_path
+
+    return spillover_folder, out_folder
 
 def cleanup(out, files_before, sample, log_message=None):
     
@@ -88,7 +107,6 @@ def cleanup(out, files_before, sample, log_message=None):
             os.remove(os.path.join(out, file))
             
         sys.exit()
-        
         
     logger.debug(f"files_after: {files_after}")    
     logger.debug(f"new_files: {new_files}")  
