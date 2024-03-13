@@ -110,6 +110,7 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
  rm <path/to/extract/directory>/MapMet_FullDataset.zip
  ```
  </details>
+  
 ## Usage
 
 <details>
