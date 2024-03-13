@@ -94,6 +94,7 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
  </details>
 <details>
  <summary><strong>Download test dataset</strong></summary>
+ 
  We prepared a small test dataset with one representative primary tumor and bone marrow sample to be used in the notebooks for demonstration purposes.
  Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
  ```bash
@@ -104,6 +105,7 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
  </details>
 <details>
  <summary><strong>Download full dataset</strong></summary>
+ 
  To process the entire dataset, described in Lazic et al., download the complete dataset. Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
  ```bash
  wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/34881/files/MapMet_FullDataset.zip #to be uploaded
@@ -116,10 +118,12 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
 
 <details>
  <summary><strong>Notebooks for demonstration</strong></summary>
+ 
  Notebooks, demonstrating each step of the pipeline on the primary tumor sample ([tests/process_TU_sample.ipynb](https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/tests/process_TU_sample.ipynb)) and bone marrow sample ([tests/process_BM_sample.ipynb](https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/tests/process_BM_sample.ipynb)) from the test dataset, are provided. 
  </details>
 <details>
- <summary><strong>Process multiple samples from CL/strong></summary>
+ <summary><strong>Process multiple samples from CL</strong></summary>
+ 
 
  First, make sure the conda environment is activated. 
  ```bash
