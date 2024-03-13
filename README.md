@@ -17,6 +17,7 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
 ## Installation
  <details>
  <summary><strong>Docker</strong></summary>
+  
  Clone the repository.
  ```bash
  git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
