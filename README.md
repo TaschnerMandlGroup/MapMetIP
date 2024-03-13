@@ -17,110 +17,102 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
 ## Installation
 + <details>
   <summary><strong>Docker</strong></summary>
-  To run MapMetIP within a docker container (and skip all steps above), set up a reproducible environment using the provided Dockerfile. 
-### Build docker image
-First clone the repository:
-```bash
-git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
-```
-then build the docker image.
-```bash
-cd MapMetIP
-docker build -t mapmet_ip .
-```
-### Pull R-based docker for spillover compensation
-The docker-based implementation assumes that the R-based docker image for spillover compensation was pulled from docker hub. 
-```bash
-docker image pull lazdaria/spillovercomp
-```
-
-### Start container in interactive mode
-Then start the mapmet_ip container, mounting
-- the Docker daemon socket to ensure that the the R-based docker container for spillover compensation can be started from within
-- the MapMetIP project directory and
-- the data volume (`/path/to/data` for storing raw data, models and results)
-
-The R-based docker container is launched by the host's Docker daemon and hence requires the aboslute path to the host data volume (`/absolute/path/to/data`).
-<!--another option is to have the spillover data already in the image and then start the container without mounts - or download the data within image -->
-```bash
-docker run -e "DOODPATH=</absolute/path/to/data>" -p 8888:8888 -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)":/usr/src/app/MapMetIP  -v </path/to/data>:/data -it mapmet_ip
-``` 
-
-After docker container setup, you can process samples as explained [below](#usage).
+  Clone the repository.
+  ```bash
+  git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
+  ```
+  Build the docker image.
+  ```bash
+  cd MapMetIP
+  docker build -t mapmet_ip .
+  ```
+  The docker-based implementation assumes that the R-based docker image for spillover compensation was pulled from docker hub. 
+  ```bash
+  docker image pull lazdaria/spillovercomp
+  ```
+  Then start the mapmet_ip container, mounting
+  - the Docker daemon socket to ensure that the the R-based docker container for spillover compensation can be started from within
+  - the MapMetIP project directory and
+  - the data volume (`/path/to/data` for storing raw data, models and results)
   
+  The R-based docker container is launched by the host's Docker daemon and hence requires the aboslute path to the host data volume (`/absolute/path/to/data`).
+  <!--another option is to have the spillover data already in the image and then start the container without mounts - or download the data within image -->
+  ```bash
+  docker run -e "DOODPATH=</absolute/path/to/data>" -p 8888:8888 -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)":/usr/src/app/MapMetIP  -v </path/to/data>:/data -it mapmet_ip
+  ``` 
+    
 + <details>
-  <summary><strong>Import the module</strong></summary>
+  <summary><strong>Manual</strong></summary>
 
-First clone the repository:
-```bash
-git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
-```
-It is recommended to install `MapMetIP` into a conda environment together with other necessary packages. If you are new to conda, please refer to these [instructions](https://biapol.github.io/blog/mara_lampert/getting_started_with_mambaforge_and_python/readme.html) first. 
-```bash
-cd MapMetIP
-conda env create -f env.yml
-```
-You can then activate the environment:
-```bash
-conda activate mapmet_ip
-```
-And install `MapMetIP`
-```bash
-pip install -e .
-```
-### Pull R-based docker image for spillover compensation
-Spillover compensation is executed in an R-based docker container. In case you need to setup docker, follow these [instructions](https://docs.docker.com/get-started/overview/). Then, pull our image from docker hub. 
-```bash
-docker image pull lazdaria/spillovercomp
-```
-
-### Clone IMC-Denoise github repository for DIMR hot-pixel removal
-To be able to use DIMR hot-poxel removal, clone the [IMC-Denoise github repository]() to the parent directory of MapMetIP. 
-```bash
-cd ..
-git clone --branch v1.0.0 https://github.com/PENGLU-WashU/IMC_Denoise.git
-```
-In case problems with Tensorflow versions, occur, add the path to the IMC_Denoise parent directory to your `~/.bashrc`:
-```bash
-export PYTHONPATH="${PYTHONPATH}:{pwd}}"
-```
+  First clone the repository:
+  ```bash
+  git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
+  ```
+  It is recommended to install `MapMetIP` into a conda environment together with other necessary packages. If you are new to conda, please refer to these [instructions](https://biapol.github.io/blog/mara_lampert      /getting_started_with_mambaforge_and_python/readme.html) first. 
+  ```bash
+  cd MapMetIP
+  conda env create -f env.yml
+  ```
+  You can then activate the environment:
+  ```bash
+  conda activate mapmet_ip
+  ```
+  And install `MapMetIP`
+  ```bash
+  pip install -e .
+  ```
+  Then pull R-based image for spillover compensation:
+  ```bash
+  docker image pull lazdaria/spillovercomp
+  ```
+  To be able to use DIMR hot-poxel removal, clone the [IMC-Denoise github repository]() to the parent directory of MapMetIP. 
+  ```bash
+  cd ..
+  git clone --branch v1.0.0 https://github.com/PENGLU-WashU/IMC_Denoise.git
+  ```
+  In case problems with Tensorflow versions, occur, add the path to the IMC_Denoise parent directory to your `~/.bashrc`:
+  ```bash
+  export PYTHONPATH="${PYTHONPATH}:{pwd}}"
+  ```
+  
 ## Download data
 
-### Download cellpose models, spillover measurements and ilastik classifiers
-In order to be able to use the segmentation, spillover compensation and background correction within `MapMetIP`, the fine-tuned cellpose models, spillover measurements and ilastik-trained background/foreground classifiers have to be downloaded from `zenodo`. 
-<!--also possible like this: zenodo_get 10.5281/zenodo.10801832-->
-Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
-```bash
-wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/34881/files/MapMetIP_models.zip
-unzip <path/to/extract/directory>/MapMetIP_models.zip -d <path/to/extract/directory>
-rm <path/to/extract/directory>/MapMetIP_models.zip
-```
-
-### Download test dataset
-We prepared a small test dataset with one representative primary tumor and bone marrow sample to be used in the notebooks for demonstration purposes.
-Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
-```bash
-wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/34881/files/MapMetIP_TestDataset.zip
-unzip <path/to/extract/directory>/MapMetIP_TestDataset.zip -d <path/to/extract/directory>
-rm <path/to/extract/directory>/MapMetIP_TestDataset.zip
-```
-
-### Download full dataset
-To process the entire dataset, described in Lazic et al., download the complete dataset. Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
-```bash
-wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/34881/files/MapMet_FullDataset.zip #to be uploaded
-unzip <path/to/extract/directory>/MapMet_FullDataset.zip -d <path/to/extract/directory>
-rm <path/to/extract/directory>/MapMet_FullDataset.zip
-```
-
-
++ <details>
+  <summary><strong>Download cellpose models, spillover measurements and ilastik classifiers</strong></summary>
+  
+  In order to be able to use the segmentation, spillover compensation and background correction within `MapMetIP`, the fine-tuned cellpose models, spillover measurements and ilastik-trained background/foreground classifiers have to be downloaded from `zenodo`. 
+  <!--also possible like this: zenodo_get 10.5281/zenodo.10801832-->
+  Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
+  ```bash
+  wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/34881/files/MapMetIP_models.zip
+  unzip <path/to/extract/directory>/MapMetIP_models.zip -d <path/to/extract/directory>
+  rm <path/to/extract/directory>/MapMetIP_models.zip
+  ```
++ <details>
+  <summary><strong>Download test dataset</strong></summary>
+  We prepared a small test dataset with one representative primary tumor and bone marrow sample to be used in the notebooks for demonstration purposes.
+  Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
+  ```bash
+  wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/34881/files/MapMetIP_TestDataset.zip
+  unzip <path/to/extract/directory>/MapMetIP_TestDataset.zip -d <path/to/extract/directory>
+  rm <path/to/extract/directory>/MapMetIP_TestDataset.zip
+  ```
++ <details>
+  <summary><strong>Download full dataset</strong></summary>
+  To process the entire dataset, described in Lazic et al., download the complete dataset. Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
+  ```bash
+  wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/34881/files/MapMet_FullDataset.zip #to be uploaded
+  unzip <path/to/extract/directory>/MapMet_FullDataset.zip -d <path/to/extract/directory>
+  rm <path/to/extract/directory>/MapMet_FullDataset.zip
+  ```
 ## Usage
 
-### Testing
++ <details>
+  <summary><strong>Notebooks for demonstration</strong></summary>
+  Notebooks, demonstrating each step of the pipeline on the primary tumor sample ([tests/process_TU_sample.ipynb](https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/tests/process_TU_sample.ipynb)) and bone marrow sample ([tests/process_BM_sample.ipynb](https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/tests/process_BM_sample.ipynb)) from the test dataset, are provided. 
 
-Notebooks, demonstrating each step of the pipeline on the primary tumor sample ([tests/process_TU_sample.ipynb](https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/tests/process_TU_sample.ipynb)) and bone marrow sample ([tests/process_BM_sample.ipynb](https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/tests/process_BM_sample.ipynb)) from the test dataset, are provided. 
-
-### Process multiple samples
++ <details>
+  <summary><strong>Process multiple samples from CL/strong></summary>
 
 First, make sure the conda environment is activated. 
 ```bash
