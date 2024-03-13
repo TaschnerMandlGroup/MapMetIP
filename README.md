@@ -61,7 +61,6 @@ rm MapMetIP_spillover.zip
 
 ### Clone IMC-Denoise github repository for DIMR hot-pixel removal
 To be able to use DIMR hot-poxel removal, clone the [IMC-Denoise github repository]() to the parent directory of MapMetIP. 
-!!!!Wont work - add path to sys.path - due to problem with required Tensorflow version !!!
 ```bash
 cd ..
 git clone --branch v1.0.0 https://github.com/PENGLU-WashU/IMC_Denoise.git
