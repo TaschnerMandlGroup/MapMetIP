@@ -39,7 +39,8 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
   <!--another option is to have the spillover data already in the image and then start the container without mounts - or download the data within image -->
   ```bash
   docker run -e "DOODPATH=</absolute/path/to/data>" -p 8888:8888 -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)":/usr/src/app/MapMetIP  -v </path/to/data>:/data -it mapmet_ip
-  ``` 
+  ```
+  </details>
     
 + <details>
   <summary><strong>Manual</strong></summary>
@@ -74,6 +75,7 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
   ```bash
   export PYTHONPATH="${PYTHONPATH}:{pwd}}"
   ```
+  </details>
   
 ## Download data
 
@@ -88,6 +90,7 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
   unzip <path/to/extract/directory>/MapMetIP_models.zip -d <path/to/extract/directory>
   rm <path/to/extract/directory>/MapMetIP_models.zip
   ```
+  </details>
 + <details>
   <summary><strong>Download test dataset</strong></summary>
   We prepared a small test dataset with one representative primary tumor and bone marrow sample to be used in the notebooks for demonstration purposes.
@@ -97,6 +100,7 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
   unzip <path/to/extract/directory>/MapMetIP_TestDataset.zip -d <path/to/extract/directory>
   rm <path/to/extract/directory>/MapMetIP_TestDataset.zip
   ```
+  </details>
 + <details>
   <summary><strong>Download full dataset</strong></summary>
   To process the entire dataset, described in Lazic et al., download the complete dataset. Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
@@ -105,12 +109,13 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
   unzip <path/to/extract/directory>/MapMet_FullDataset.zip -d <path/to/extract/directory>
   rm <path/to/extract/directory>/MapMet_FullDataset.zip
   ```
+  </details>
 ## Usage
 
 + <details>
   <summary><strong>Notebooks for demonstration</strong></summary>
   Notebooks, demonstrating each step of the pipeline on the primary tumor sample ([tests/process_TU_sample.ipynb](https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/tests/process_TU_sample.ipynb)) and bone marrow sample ([tests/process_BM_sample.ipynb](https://github.com/TaschnerMandlGroup/MapMetIP/blob/main/tests/process_BM_sample.ipynb)) from the test dataset, are provided. 
-
+  </details>
 + <details>
   <summary><strong>Process multiple samples from CL/strong></summary>
 
@@ -128,6 +133,7 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
   cd MapMetIP
   python3 run_all.py -s <sample_name1> <sample_2> <sample_name3> --data_path <path/to>/MapMetIP_TestDataset/raw_data --model_path <path/to>/MapMetIP_models --save_dir <path/to/save/results> --log_path <path/to/save/logs>
   ```
+  </details>
 
 ## Contributors
 
