@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 from .utils import GPU
 import logging
-#
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
