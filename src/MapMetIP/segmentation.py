@@ -9,7 +9,7 @@ from pathlib import Path
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-#
+
 class Segmenter():
     
     def __init__(self, model):
