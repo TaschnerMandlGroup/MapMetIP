@@ -50,7 +50,7 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
  ```bash
  git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
  ```
- It is recommended to install `MapMetIP` into a conda environment together with other necessary packages. If you are new to conda, please refer to these [instructions](https://biapol.github.io/blog/mara_lampert      /getting_started_with_mambaforge_and_python/readme.html) first. 
+ It is recommended to install `MapMetIP` into a conda environment together with other necessary packages. If you are new to conda, please refer to these [instructions](https://biapol.github.io/blog/mara_lampert/getting_started_with_mambaforge_and_python/readme.html) first. 
  ```bash
  cd MapMetIP
  conda env create -f env.yml
