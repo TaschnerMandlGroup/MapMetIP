@@ -45,6 +45,7 @@ This code supplements the publication (in preparation) by Lazic, Gutwein et al. 
  docker run -e "DOODPATH=</absolute/path/to/data>" -p 8888:8888 -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)":/usr/src/app/MapMetIP  -v </path/to/data>:/data --gpus all -it mapmet_ip
  ```
 A Jupyter Notebook server session can then be accessed via your browser at `localhost:8888`. The `stdout` of the started container will provide a token, which has to be copied for login.
+
  </details>
     
  <details>
