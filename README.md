@@ -17,8 +17,8 @@ This code supplements the publication (in preparation) by Lazic, Gutwein et al. 
 ## Installation
  <details>
  <summary><strong>Docker</strong></summary>
- 
- Clone the repository.
+ The test dataset and models required to run `MapMetIP`are downloaded autmoatically during container startup. 
+ First, clone the repository.
  ```bash
  git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
  ```
@@ -34,7 +34,7 @@ This code supplements the publication (in preparation) by Lazic, Gutwein et al. 
  Then start the mapmet_ip container, mounting
  - the Docker daemon socket to ensure that the the R-based docker container for spillover compensation can be started from within
  - the MapMetIP project directory and
- - the data volume (`/path/to/data` for storing raw data and models - will be automatically downloadeded during container startup)
+ - the data volume (`/path/to/data` for storing the test dataset and models - will be automatically downloadeded during container startup)
  - access to GPUs on host
  
  The R-based docker container is launched by the host's Docker daemon and hence requires the aboslute path to the host data volume (`/absolute/path/to/data`).
