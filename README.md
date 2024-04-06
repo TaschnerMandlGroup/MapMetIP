@@ -19,8 +19,10 @@ This code supplements the publication (in preparation) by Lazic, Gutwein et al. 
 ## Installation
  <details>
  <summary><strong>Docker</strong></summary>
+  
  The test dataset and models required to run `MapMetIP`are downloaded autmoatically during container startup. 
  First, clone the repository.
+ 
  ```bash
  git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
  ```
