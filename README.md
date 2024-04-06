@@ -6,7 +6,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10801832.svg)](https://doi.org/10.5281/zenodo.10801832)
 ![Suggestions Welcome](https://img.shields.io/badge/suggestions-welcome-green)
 
-This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we use 3-plex immmunofluorescence (IF) microscopy and 41-plex imaging mass cytometry (IMC) to spatially and temporally map primary and metastatic neuroblastoma. The image processing pipeline can be largely divided into the following steps:
+This code supplements the publication (in preparation) by Lazic, Gutwein et al. Therein, we use 3-plex immmunofluorescence (IF) microscopy and 41-plex imaging mass cytometry (IMC) to spatially and temporally map primary and metastatic neuroblastoma. The image processing pipeline can be largely divided into the following steps:
 1. **Segmentation** based on nuclear IF (DAPI) image using [cellpose](https://github.com/MouseLand/cellpose) [1] model finetuned on our own data - individual models were trained for primary tumor (`CP_TU`) and metastatic bone marrow samples (`CP_BM`)
 2. **Registration** between IF and IMC images/masks via scale-invariant feature transformation ([SIFT](https://ieeexplore.ieee.org/document/6396024)) [2]
 3. **Spillover compensation** of IMC images according to [[3]](https://github.com/BodenmillerGroup/cyTOFcompensation)
@@ -17,7 +17,7 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
 ## Installation
  <details>
  <summary><strong>Docker</strong></summary>
-  
+ 
  Clone the repository.
  ```bash
  git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
@@ -34,12 +34,13 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
  Then start the mapmet_ip container, mounting
  - the Docker daemon socket to ensure that the the R-based docker container for spillover compensation can be started from within
  - the MapMetIP project directory and
- - the data volume (`/path/to/data` for storing raw data, models and results)
+ - the data volume (`/path/to/data` for storing raw data and models - will be automatically downloadeded during container startup)
+ - access to GPUs on host
  
  The R-based docker container is launched by the host's Docker daemon and hence requires the aboslute path to the host data volume (`/absolute/path/to/data`).
- <!--another option is to have the spillover data already in the image and then start the container without mounts - or download the data within image -->
+
  ```bash
- docker run -e "DOODPATH=</absolute/path/to/data>" -p 8888:8888 -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)":/usr/src/app/MapMetIP  -v </path/to/data>:/data -it mapmet_ip
+ docker run -e "DOODPATH=</absolute/path/to/data>" -p 8888:8888 -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)":/usr/src/app/MapMetIP  -v </path/to/data>:/data --gpus all -it mapmet_ip
  ```
  </details>
     
@@ -106,12 +107,7 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
 <details>
  <summary><strong>Download full dataset</strong></summary>
  
- To process the entire dataset, described in Lazic et al., download the complete dataset. Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
- ```bash
- wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/34881/files/MapMet_FullDataset.zip #to be uploaded
- unzip <path/to/extract/directory>/MapMet_FullDataset.zip -d <path/to/extract/directory>
- rm <path/to/extract/directory>/MapMet_FullDataset.zip
- ```
+ The entire dataset, described in Lazic et al., will be uploaded with the publication.
  </details>
   
 ## Usage
@@ -131,12 +127,12 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
  ```bash
  conda activate mapmet_ip
  ```
- To run the complete image processing pipeline on a defined sample, run the command below. For Docker-based implementation, adapt paths according to the container's file structure in `/data`.
+ To run the complete image processing pipeline on a defined sample, use the command below. 
  ```bash
  cd MapMetIP
  python3 run_all.py -s <sample_name> --data_path <path/to>/MapMetIP_TestDataset/raw_data --model_path <path/to>/MapMetIP_models --save_dir <path/to/save/results> --log_path <path/to/save/logs>
  ```
- To run the complete image processing pipeline on a list of samples, run the command below.
+ To run the complete image processing pipeline on a list of samples, use the command below.
  ```bash
  cd MapMetIP
  python3 run_all.py -s <sample_name1> <sample_2> <sample_name3> --data_path <path/to>/MapMetIP_TestDataset/raw_data --model_path <path/to>/MapMetIP_models --save_dir <path/to/save/results> --log_path <path/to/save/logs>
@@ -150,7 +146,7 @@ This code supplements the [publication]() by Lazic, Gutwein et al. Therein, we u
 [Daria Lazic](https://github.com/LazDaria)
 
 ## Citation
-Please cite the following paper when using `MapMetIP`:
+Please cite the following paper (in preparation) when using `MapMetIP`:
 
 >  Lazic, D., Gutwein, S., Humhal V. et al. Title to be selected. Journal (2024). https://doi.org/DOI
 
