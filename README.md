@@ -17,6 +17,7 @@ This code supplements the publication (in preparation) by Lazic, Gutwein et al. 
 6. **Feature Extraction**: extraction of marker intensity and morphological features
 
 ## Installation
+
  <details>
  <summary><strong>Docker</strong></summary>
   
@@ -147,11 +148,12 @@ A Jupyter Notebook server session can then be accessed via your browser at `loca
 
 ## Contributors
 
-[Simon Gutwein](https://github.com/SimonBon/)
-
 [Daria Lazic](https://github.com/LazDaria)
 
+[Simon Gutwein](https://github.com/SimonBon/)
+
 ## Citation
+
 Please cite the following paper (in preparation) when using `MapMetIP`:
 
 >  Lazic, D., Gutwein, S., Humhal V. et al. Title to be selected. Journal (2024). https://doi.org/DOI
@@ -166,6 +168,7 @@ Please cite the following paper (in preparation) when using `MapMetIP`:
     }
 
 ## References
+
 - [1] [Pachitariu et al. (2022), Nature Methods.](https://www.nature.com/articles/s41592-022-01663-4)
 - [2] [Mahesh et al. (2012), ICCCNT'12.](https://ieeexplore.ieee.org/document/6396024)
 - [3] [Chevrier et al. (2018), Cell Systems.](https://doi.org/10.1016/j.cels.2018.02.010)
