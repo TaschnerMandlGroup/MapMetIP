@@ -10,10 +10,10 @@ echo "Installing MapMetIP in editable mode."
 pip install -e .
 
 echo "Downloading data and models from Zenodo and storing it in /data/raw and /data/models. Assuming /data is the mounted volume directory"
-wget -P /data https://sandbox.zenodo.org/record/34881/files/MapMetIP_models.zip
+wget -P /data https://sandbox.zenodo.org/record/93580/files/MapMetIP_models.zip
 unzip /data/MapMetIP_models.zip -d /data
 
-wget -P /data https://sandbox.zenodo.org/records/34881/files/MapMetIP_TestDataset.zip
+wget -P /data https://sandbox.zenodo.org/records/93580/files/MapMetIP_TestDataset.zip
 unzip /data/MapMetIP_TestDataset.zip -d /data
 
 echo "Creating log_files and results directories within /data"
