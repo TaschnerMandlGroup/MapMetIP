@@ -39,13 +39,13 @@ This code supplements the publication (in preparation) by Lazic, Gutwein et al. 
  Then start the mapmet_ip container, mounting
  - the Docker daemon socket to ensure that the the R-based docker container for spillover compensation can be started from within
  - the MapMetIP project directory and
- - the data volume (`/path/to/data` for storing the test dataset and models - will be automatically downloadeded during container startup)
+ - a data volume for writing downloaded files (`/path/to/data` - the test dataset and models will be automatically downloadeded during container startup)
  - access to GPUs on host
  
  The R-based docker container is launched by the host's Docker daemon and hence requires the aboslute path to the host data volume (`/absolute/path/to/data`).
 
  ```bash
- docker run -e "DOODPATH=</absolute/path/to/data>" -p 8888:8888 -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)":/usr/src/app/MapMetIP  -v </path/to/data>:/data --gpus all -it mapmet_ip
+ docker run -p 8888:8888 -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)":/usr/src/app/MapMetIP  -v </path/to/data>:/data --gpus all -e "DOODPATH=</absolute/path/to/data>" -it mapmet_ip
  ```
 A Jupyter Notebook server session can then be accessed via your browser at `localhost:8888`. The `stdout` of the started container will provide a token, which has to be copied for login.
 
