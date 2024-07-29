@@ -21,7 +21,7 @@ This code supplements the publication (in preparation) by Lazic, Gutwein et al. 
  <details>
  <summary><strong>Docker</strong></summary>
   
- The test dataset and models required to run `MapMetIP`are downloaded autmoatically during container startup. 
+ The test dataset and models required to run `MapMetIP`are downloaded automatically during container startup. 
  First, clone the repository.
  
  ```bash
