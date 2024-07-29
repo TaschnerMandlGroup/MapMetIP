@@ -82,7 +82,7 @@ A Jupyter Notebook server session can then be accessed via your browser at `loca
  ```
  In case problems with Tensorflow versions, occur, add the path to the IMC_Denoise parent directory to your `~/.bashrc`:
  ```bash
- export PYTHONPATH="${PYTHONPATH}:{pwd}}"
+ export PYTHONPATH="${PYTHONPATH}:$(pwd)"
  ```
  </details>
   
