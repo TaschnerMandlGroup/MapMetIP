@@ -54,7 +54,7 @@ def parse():
 if __name__ == "__main__":
     script_path = os.path.abspath(__file__)
     script_dir = os.path.dirname(script_path)
-    debug_file = None #(os.path.join(script_dir, "debug_file.json"))
+    debug_file = None #(os.path.join(script_dir, "debug_file.json")) 
     
     if debug_file:
         with open(debug_file, 'rb') as fh:
@@ -69,7 +69,7 @@ if __name__ == "__main__":
     else:
         args = parse()
         
-    setup_logger(args.sample_name, args.log_path)    
+    setup_logger(args.sample_name.split(".")[0], args.log_path)    
     
     sample_folder = os.path.join(args.base, args.sample_name)
     

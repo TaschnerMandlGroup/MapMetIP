@@ -13,6 +13,7 @@ import pandas as pd
 import cv2
 import tifffile
 from xtiff import to_tiff
+import h5py
 
 import logging
 
@@ -21,36 +22,34 @@ logger.setLevel(logging.DEBUG)
 
 class Sample():
     
-    def __init__(self, dir_path, log=True):
+    def __init__(self, file_path, log=True):
         
-        assert os.path.isdir(dir_path)
+        assert os.path.isfile(file_path)
         
-        self.dir_path = Path(dir_path)
+        self.file_path = Path(file_path)
         
-        parts = self.dir_path.stem.split("_")
+        parts = self.file_path.stem.split("_")
         
         if len(parts) == 5:
             
             self.sample_name = "_".join(parts[:-1])
-            self.sample_info = parts[-1]
+            self.sample_info = parts[-1].split(".")[0]
 
         else:
         
-            self.sample_name = self.dir_path.stem
+            self.sample_name = self.file_path.stem.split(".")[0]
             
         self.date0, self.date1, self.sample_id, self.sample_type, = self.sample_name.split("_")
         self.date0 = datetime.strptime(self.date0, "%Y%m%d")
         self.date1 = datetime.strptime(self.date1, "%Y%m%d")
         self.sample_number = int(self.sample_id.split("-")[1])
         self.sample_year = 2000 + int(self.sample_id.split("-")[0])
-        self.files = glob.glob(f"{self.dir_path}/*.*")
         
-        logger.debug(f"dir_path: {self.dir_path}")
+        logger.debug(f"file_path: {self.file_path}")
         logger.debug(f"date0: {self.date0}")
         logger.debug(f"date1: {self.date1}")
         logger.debug(f"sample_number: {self.sample_number}")
         logger.debug(f"sample_year: {self.sample_year}")
-        logger.debug(f"files: {self.files}")
         
         self.data = {}
         
@@ -61,10 +60,10 @@ class ROI():
         
 class MapMetIP_Sample(Sample):
     
-    def __init__(self, dir_path):
+    def __init__(self, file_path):
     
         
-        super().__init__(dir_path)
+        super().__init__(file_path)
         
         self.LOOKUP_TABLE = getattr(lookup, f"LOOKUP_TABLE_{self.sample_type}")
         self.NUCLEAR_MARKER = getattr(lookup, f"NUCLEAR_MARKER_{self.sample_type}")
@@ -76,20 +75,11 @@ class MapMetIP_Sample(Sample):
         logger.debug(f"self.PERCENTILE_LOOKUP: PERCENTILE_LOOKUP_{self.sample_type}")
         logger.debug(f"self.KEEP_CHANNELS: KEEP_CHANNELS_{self.sample_type}")
         
-        self.tif_files = [x for x in self.files if ".tif" in x.lower()]
-        self.mcd_files = [x for x in self.files if ".mcd" in x.lower()]
-        
-        assert len(self.mcd_files) == 1, "currently only one mcd file possible"
-        
-        self.mcd_files = self.mcd_files[0]
-        
-        self.mod0 = self.read_tif_rois()
-        self.mod1 = self.read_IMC_rois()
+        self.mod0 = self.read_rois('IF')
+        self.mod1 = self.read_rois('IMC')
         
         self.match_rois()
         
-        logger.debug(f"tif_files: {self.tif_files}")
-        logger.debug(f"mcd_files: {self.mcd_files}")
         logger.debug(f"self.mod0.keys(): {list(self.mod0.keys())}")
         logger.debug(f"self.mod1.keys(): {list(self.mod1.keys())}")
         
@@ -102,7 +92,6 @@ class MapMetIP_Sample(Sample):
             logger.debug(f"self.mod1.stack_channels: ROI: {k}, {list(v.stack_channels)}")
 
         del self.rois
-        del self.info
         
     def match_rois(self):
     
@@ -120,82 +109,34 @@ class MapMetIP_Sample(Sample):
         logger.debug(f"mod0 found rois: {mod0_rois}")
         logger.debug(f"mod1 found rois: {mod1_rois}")
         logger.debug(f"keep_rois: {keep_rois}")
-        
-        
-    def read_tif_rois(self):
+            
+    def read_rois(self, mod):
 
-    
         self.rois = {}
-        self.info = []
-        for file in self.tif_files:
-            
-            with open(file, 'rb') as f:
-                tags = exifread.process_file(f)
-             
-            print(str(tags["Image Tag 0xB0B7"]))
-            try:
-                roi_num = int(re.findall("(?<=[rR][oO][iI]_)[0-9]+", str(tags["Image Tag 0xB0B7"]))[0])
-            except:
-                roi_num = int(re.findall("(?<=[rR][oO][iI])[0-9]+", str(tags["Image Tag 0xB0B7"]))[0])
-                
-            print(file)
-            channel = re.findall("(?<=_)[A-Z]\.", file)[0][0]
-            
-            logger.debug(f"filename - channel - roi: {file} - {channel}- {roi_num}")
-            
-            self.info.append([roi_num, channel, file])
-            
-        self.info = pd.DataFrame(self.info, columns=["roi", "channel", "filename"])
-        
-        for roi in np.unique(self.info.roi):
-            
-            tmp = self.info[self.info.roi == roi]
-            self.add_roi(tmp)
-            
-        return self.rois
-            
-    def add_roi(self, roi_df):
-        
-        roi_df = roi_df.sort_values("channel")
-        
-        image_stack = np.stack([imread(row.filename) for _, row in roi_df.iterrows()], axis=-1).transpose(2,0,1)
-        channels = np.array([self.LOOKUP_TABLE[row.channel] for _, row in roi_df.iterrows()])
-        
-        self.rois[list(roi_df.roi)[0]] = ROI()
-        
-        setattr(self.rois[list(roi_df.roi)[0]], "image_stack", image_stack)
-        setattr(self.rois[list(roi_df.roi)[0]], "stack_channels", channels)
-            
-            
-    def read_IMC_rois(self):
-    
-        
-        self.rois = {}
-        with MCDFile(self.mcd_files) as f:
 
-            for acq in f.slides[0].acquisitions:
-                try:
-                    img = f.read_acquisition(acq)
-                    if img.shape[1] != 700 or img.shape[2] != 700:
-                        roi_num = int(re.findall("[0-9]+", acq.description)[0])
-                        logger.debug(f"Found image with size different than 700x700: {img.shape}, roi_num: {roi_num}")
-                        continue
-                except:
-                    continue
+        with h5py.File(self.file_path, 'r') as f:
+            self.file = f
+            for roi in list(self.file[mod].keys()):
+
+                image_stack = self.file[mod][roi]['image'][:]
+
+                if mod == 'IMC':
+                    #crop image by 2 pixels to eliminate ablation artifacts
+                    image_stack = crop_image(image_stack, px=2, axis=(1,2)) 
+
+                channels = np.array([self.LOOKUP_TABLE[channel] for channel in list(self.file[mod][roi].attrs['channel_names'])])
             
-                roi_num = int(re.findall("[0-9]+", acq.description)[0])
-                channels = np.array(acq.channel_labels)
+                roi = int(roi)
+                self.rois[roi] = ROI()
+            
+                setattr(self.rois[roi], "image_stack", image_stack)
+                setattr(self.rois[roi], "stack_channels", channels)
                 
-                self.rois[roi_num] = ROI()
-                
-                #crop image by 2 pixels to eliminate ablation artifacts
-                img = crop_image(img, px=2, axis=(1,2)) 
-                
-                setattr(self.rois[roi_num], "image_stack", img)
-                setattr(self.rois[roi_num], "stack_channels", np.array([self.LOOKUP_TABLE[c] for c in channels]))
+                logger.debug(f"Decompressed {mod} image of ROI: {roi}")
 
         return self.rois
-
+    
+       
     def calculate_nuclear_image(self):
         
         for roi in self.mod1.keys():
