@@ -146,7 +146,7 @@ A Jupyter Notebook server session can then be accessed via your browser at `loca
  To run the complete image processing pipeline on a list of samples, use the command below.
  ```bash
  cd MapMetIP
- python3 run_all.py -s <sample_name1> <sample_2> <sample_name3> --data_path <path/to>/MapMetIP_TestDataset --model_path <path/to>/MapMetIP_models --save_dir <path/to/save/results> --log_path <path/to/save/logs>
+ python3 run_all.py -s <sample_name1> <sample_name2> <sample_name3> --data_path <path/to>/MapMetIP_TestDataset --model_path <path/to>/MapMetIP_models --save_dir <path/to/save/results> --log_path <path/to/save/logs>
  ```
  </details>
 
