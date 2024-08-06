@@ -16,76 +16,6 @@ This code supplements the publication (in preparation) by Lazic, Gutwein et al. 
 5. **Background correction and normalization** using background/foreground classifiers trained in [Ilastik](https://github.com/ilastik/ilastik/tree/main) [5] - individual models were trained for each marker and tissue type (primary tumor/bone marrow)
 6. **Feature Extraction**: extraction of marker intensity and morphological features
 
-## Installation
-
- <details>
- <summary><strong>Docker</strong></summary>
-  
- The test dataset and models required to run `MapMetIP`are downloaded automatically during container startup. 
- First, clone the repository.
- 
- ```bash
- git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
- ```
- Build the docker image.
- ```bash
- cd MapMetIP
- docker build -t mapmet_ip .
- ```
- The docker-based implementation assumes that the R-based docker image for spillover compensation was pulled from docker hub. 
- ```bash
- docker image pull lazdaria/spillovercomp
- ```
- Then start the mapmet_ip container, mounting
- - the Docker daemon socket to ensure that the the R-based docker container for spillover compensation can be started from within
- - the MapMetIP project directory and
- - a data volume for downloaded files (`/path/to/write/data` - the test dataset and models required to run the pipeline will be automatically downloadeded to this path during container startup)
-
-and allowing access to GPUs on host.
- 
-The R-based docker container is launched by the host's Docker daemon and hence requires the aboslute path to the host data volume (`/absolute/path/to/write/data`).
-
- ```bash
- docker run -p 8888:8888 -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)":/usr/src/app/MapMetIP  -v </path/to/data>:/data --gpus all -e "DOODPATH=</absolute/path/to/data>" -it mapmet_ip
- ```
-A Jupyter Notebook server session can then be accessed via your browser at `localhost:8888`. The `stdout` of the started container will provide a token, which has to be copied for login.
-
- </details>
-    
- <details>
- <summary><strong>Manual</strong></summary>
-
- First clone the repository:
- ```bash
- git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
- ```
- It is recommended to install `MapMetIP` into a conda environment together with other necessary packages. If you are new to conda, please refer to these [instructions](https://biapol.github.io/blog/mara_lampert/getting_started_with_mambaforge_and_python/readme.html) first. 
- ```bash
- cd MapMetIP
- conda env create -f env.yml
- ```
- You can then activate the environment:
- ```bash
- conda activate mapmet_ip
- ```
- And install `MapMetIP`
- ```bash
- pip install -e .
- ```
- Then pull R-based image for spillover compensation:
- ```bash
- docker image pull lazdaria/spillovercomp
- ```
- To be able to use DIMR hot-poxel removal, clone the [IMC-Denoise github repository]() to the parent directory of MapMetIP. 
- ```bash
- cd ..
- git clone --branch v1.0.0 https://github.com/PENGLU-WashU/IMC_Denoise.git
- ```
- In case problems with Tensorflow versions, occur, add the path to the IMC_Denoise parent directory to your `~/.bashrc`:
- ```bash
- export PYTHONPATH="${PYTHONPATH}:$(pwd)"
- ```
- </details>
   
 ## Download data
 
@@ -116,6 +46,78 @@ A Jupyter Notebook server session can then be accessed via your browser at `loca
  <summary><strong>Download full dataset</strong></summary>
  
  The entire dataset, described in Lazic et al., will be uploaded with the publication.
+ </details>
+
+## Installation
+
+Once models and data have been downloaded, the pipeline can be run either in a Docker container or in your local development environment.
+
+ <details>
+ <summary><strong>Docker</strong></summary>
+ Follow the instructions provided in this section to set up and run the pipeline within a Docker container.
+ First, clone the repository.
+ 
+ ```bash
+ git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
+ ```
+ Build the docker image.
+ ```bash
+ cd MapMetIP
+ docker build -t mapmet_ip .
+ ```
+ The docker-based implementation assumes that the R-based docker image for spillover compensation was pulled from docker hub. 
+ ```bash
+ docker image pull lazdaria/spillovercomp
+ ```
+ Then start the mapmet_ip container, mounting
+ - the Docker daemon socket (`-v /var/run/docker.sock:/var/run/docker.sock`) to ensure that the the R-based docker container for spillover compensation can be started from within
+ - the MapMetIP project directory (`-v "$(pwd)":/usr/src/app/MapMetIP`) and
+ - the path to the downloaded data (`-v <path/to/extract/directory>:/data`)
+
+and allowing access to GPUs on host (`--gpus all`).
+ 
+The R-based docker container is launched by the host's Docker daemon, therefore make sure to provide the absolute path to the downloaded data (`-e "DOODPATH=<path/to/extract/directory>"`).
+
+ ```bash
+ docker run -p 8888:8888 -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)":/usr/src/app/MapMetIP  -v <path/to/extract/directory>:/data --gpus all -e "DOODPATH=<path/to/extract/directory>" -it mapmet_ip
+ ```
+A Jupyter Notebook server session can then be accessed via your browser at `localhost:8888`. The `stdout` of the started container will provide a token, which has to be copied for login.
+
+ </details>
+    
+ <details>
+ <summary><strong>Developer Mode</strong></summary>
+ Follow the instructions provided in this section to run the pipeline in your local development environment.
+ First clone the repository:
+ ```bash
+ git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
+ ```
+ It is recommended to install `MapMetIP` into a conda environment together with other necessary packages. If you are new to conda, please refer to these [instructions](https://biapol.github.io/blog/mara_lampert/getting_started_with_mambaforge_and_python/readme.html) first. 
+ ```bash
+ cd MapMetIP
+ conda env create -f env.yml
+ ```
+ You can then activate the environment:
+ ```bash
+ conda activate mapmet_ip
+ ```
+ And install `MapMetIP`
+ ```bash
+ pip install -e .
+ ```
+ Then pull R-based image for spillover compensation:
+ ```bash
+ docker image pull lazdaria/spillovercomp
+ ```
+ To be able to use DIMR hot-poxel removal, clone the [IMC-Denoise github repository]() to the parent directory of MapMetIP. 
+ ```bash
+ cd ..
+ git clone --branch v1.0.0 https://github.com/PENGLU-WashU/IMC_Denoise.git
+ ```
+ In case problems with Tensorflow versions, occur, add the path to the IMC_Denoise parent directory to your `~/.bashrc`:
+ ```bash
+ export PYTHONPATH="${PYTHONPATH}:$(pwd)"
+ ```
  </details>
   
 ## Usage
