@@ -160,10 +160,10 @@ A Jupyter Notebook server session can then be accessed via your browser at `loca
 
 Please cite the following paper (in preparation) when using `MapMetIP`:
 
->  Lazic, D., Gutwein, S. et al. TEMPORAL AND SPATIAL DYNAMICS OF METASTASIS AND THERAPY RESISTANCE IN NEUROBLASTOMA. Journal (2024). https://doi.org/DOI
+>  Lazic, D., et al. TEMPORAL AND SPATIAL DYNAMICS OF METASTASIS AND THERAPY RESISTANCE IN NEUROBLASTOMA. Journal (2024). https://doi.org/DOI
 
     @article{Lazic2024,
-        author = {Lazic, Daria and Gutwein, Simon, et al.},
+        author = {Lazic, Daria, et al.},
         title = {TEMPORAL AND SPATIAL DYNAMICS OF METASTASIS AND THERAPY RESISTANCE IN NEUROBLASTOMA},
         year = {2024},
         doi = {DOI},
