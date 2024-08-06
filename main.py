@@ -68,7 +68,10 @@ if __name__ == "__main__":
                 setattr(args, arg, None)
     else:
         args = parse()
-        
+    
+    if not os.path.exists(args.log_path):
+        os.mkdir(args.log_path)
+
     setup_logger(args.sample_name.split(".")[0], args.log_path)    
     
     sample_folder = os.path.join(args.base, args.sample_name)
@@ -226,6 +229,9 @@ if __name__ == "__main__":
     sample = extract_sample_features(sample, featureextractor)
     
     sample = extract_neighbors(sample, dmax=150)
+
+    if not os.path.exists(args.save_dir):
+        os.mkdir(args.save_dir)
 
     save_sample(sample, args.save_dir)
     

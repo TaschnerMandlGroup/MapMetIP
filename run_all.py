@@ -32,13 +32,16 @@ if __name__ == "__main__":
     
     args = parse()
     samples = args.sample_list
-    base = args.data_path
+    data_path = args.data_path
     save_dir = args.save_dir
     log_path = args.log_path
 
     spillover_folder = os.path.join(args.model_path, "spillover")
     docker_folder = os.path.join(spillover_folder, "out")
-    
+
+    if not os.path.exists(log_path):
+        os.mkdir(log_path)
+
     logger = setup_logger(args.log_path)
     
     for sample in samples:
@@ -49,6 +52,7 @@ if __name__ == "__main__":
         
         if "BM" in sample:
 
+            base = os.path.join(data_path, "BM")
             segmentation_diameter = 55
             backgroundcorrection_folder = os.path.join(args.model_path, "BM/BC_classifiers")
             segmentation_model = os.path.join(args.model_path, "BM/segmentation_model/CP_BM")
@@ -57,6 +61,7 @@ if __name__ == "__main__":
 
         elif "TU" in sample:
             
+            base = os.path.join(data_path, "TU")
             segmentation_diameter = 31
             backgroundcorrection_folder = os.path.join(args.model_path, "TU/BC_classifiers")
             segmentation_model = os.path.join(args.model_path, "TU/segmentation_model/CP_TU")
