@@ -95,7 +95,6 @@ def compress_folder_to_h5(out, root, files, level):
         rois = read_IMC_rois(mcd_files[0])
         IMC = h5file.create_group('IMC')
         IMC = compress_rois_to_h5(IMC, rois, level)
-        x=0
 
 def compress_all_folders(source, out, lev):
     for root, _, files in os.walk(source):
@@ -103,10 +102,14 @@ def compress_all_folders(source, out, lev):
         if not files and root == source:
             continue 
 
+        # delete later
+        # if os.path.basename(root) in [f.split(".")[0] for f in os.listdir(out)]:
+        #     continue
+
         compress_folder_to_h5(out, root, files, lev)
 
-# source_folder = '/home/daria_l/isilon_images_mnt/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/compression_test'  # Change to your source folder path
-# output_h5_file = '/home/daria_l/isilon_images_mnt/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/compression_out'    # Change to your desired output file
+# source_folder = '/home/daria_l/isilon_images_mnt/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/archive/compression_test'  # Change to your source folder path
+# output_h5_file = '/home/daria_l/isilon_images_mnt/10_MetaSystems/MetaSystemsData/Multimodal_Imaging_Daria/Publication/archive/compression_out'    # Change to your desired output file
 # compression_level = 6  # Set your desired compression level (0-9)
 
 # compress_all_folders(source_folder, output_h5_file, compression_level)
