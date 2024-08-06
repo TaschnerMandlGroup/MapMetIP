@@ -89,6 +89,7 @@ A Jupyter Notebook server session can then be accessed via your browser at `loca
  <summary><strong>Developer Mode</strong></summary>
  Follow the instructions provided in this section to run the pipeline in your local development environment.
  First clone the repository:
+   
  ```bash
  git clone https://github.com/TaschnerMandlGroup/MapMetIP.git
  ```
