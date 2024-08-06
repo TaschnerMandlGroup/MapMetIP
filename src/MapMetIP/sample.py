@@ -134,6 +134,7 @@ class MapMetIP_Sample(Sample):
                 
                 logger.debug(f"Decompressed {mod} image of ROI: {roi}")
 
+        del self.file
         return self.rois
     
        
