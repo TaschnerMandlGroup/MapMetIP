@@ -39,10 +39,11 @@ This code supplements the publication (in preparation) by Lazic, Gutwein et al. 
  Then start the mapmet_ip container, mounting
  - the Docker daemon socket to ensure that the the R-based docker container for spillover compensation can be started from within
  - the MapMetIP project directory and
- - a data volume for downloaded files (`/path/to/data` - the test dataset and models required to run the pipeline will be automatically downloadeded to this path during container startup)
- - access to GPUs on host
+ - a data volume for downloaded files (`/path/to/write/data` - the test dataset and models required to run the pipeline will be automatically downloadeded to this path during container startup)
+
+and allowing access to GPUs on host.
  
- The R-based docker container is launched by the host's Docker daemon and hence requires the aboslute path to the host data volume (`/absolute/path/to/data`).
+The R-based docker container is launched by the host's Docker daemon and hence requires the aboslute path to the host data volume (`/absolute/path/to/write/data`).
 
  ```bash
  docker run -p 8888:8888 -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)":/usr/src/app/MapMetIP  -v </path/to/data>:/data --gpus all -e "DOODPATH=</absolute/path/to/data>" -it mapmet_ip
