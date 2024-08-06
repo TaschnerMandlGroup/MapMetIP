@@ -26,7 +26,7 @@ This code supplements the publication (in preparation) by Lazic, Gutwein et al. 
  <!--also possible like this: zenodo_get 10.5281/zenodo.10801832-->
  Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
  ```bash
- wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/93580/files/MapMetIP_models.zip
+ wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/99073/files/MapMetIP_models.zip
  unzip <path/to/extract/directory>/MapMetIP_models.zip -d <path/to/extract/directory>
  rm <path/to/extract/directory>/MapMetIP_models.zip
  ```
@@ -37,7 +37,7 @@ This code supplements the publication (in preparation) by Lazic, Gutwein et al. 
  We prepared a small test dataset with one representative primary tumor and bone marrow sample to be used in the notebooks for demonstration purposes.
  Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
  ```bash
- wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/93580/files/MapMetIP_TestDataset.zip
+ wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/99073/files/MapMetIP_TestDataset.zip
  unzip <path/to/extract/directory>/MapMetIP_TestDataset.zip -d <path/to/extract/directory>
  rm <path/to/extract/directory>/MapMetIP_TestDataset.zip
  ```
