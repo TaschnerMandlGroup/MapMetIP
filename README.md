@@ -138,15 +138,15 @@ A Jupyter Notebook server session can then be accessed via your browser at `loca
  ```bash
  conda activate mapmet_ip
  ```
- To run the complete image processing pipeline on a defined sample, use the command below. 
+ To run the complete image processing pipeline on a defined sample, use the command below.
  ```bash
  cd MapMetIP
- python3 run_all.py -s <sample_name> --data_path <path/to>/MapMetIP_TestDataset/raw_data --model_path <path/to>/MapMetIP_models --save_dir <path/to/save/results> --log_path <path/to/save/logs>
+ python3 run_all.py -s <sample_name> --data_path <path/to>/MapMetIP_TestDataset --model_path <path/to>/MapMetIP_models --save_dir <path/to/save/results> --log_path <path/to/save/logs>
  ```
  To run the complete image processing pipeline on a list of samples, use the command below.
  ```bash
  cd MapMetIP
- python3 run_all.py -s <sample_name1> <sample_2> <sample_name3> --data_path <path/to>/MapMetIP_TestDataset/raw_data --model_path <path/to>/MapMetIP_models --save_dir <path/to/save/results> --log_path <path/to/save/logs>
+ python3 run_all.py -s <sample_name1> <sample_2> <sample_name3> --data_path <path/to>/MapMetIP_TestDataset --model_path <path/to>/MapMetIP_models --save_dir <path/to/save/results> --log_path <path/to/save/logs>
  ```
  </details>
 
@@ -160,11 +160,11 @@ A Jupyter Notebook server session can then be accessed via your browser at `loca
 
 Please cite the following paper (in preparation) when using `MapMetIP`:
 
->  Lazic, D., Gutwein, S., Humhal V. et al. Title to be selected. Journal (2024). https://doi.org/DOI
+>  Lazic, D., Gutwein, S. et al. TEMPORAL AND SPATIAL DYNAMICS OF METASTASIS AND THERAPY RESISTANCE IN NEUROBLASTOMA. Journal (2024). https://doi.org/DOI
 
     @article{Lazic2024,
-        author = {Lazic, Daria and Gutwein, Simon and },
-        title = {Title to be selected},
+        author = {Lazic, Daria and Gutwein, Simon, et al.},
+        title = {TEMPORAL AND SPATIAL DYNAMICS OF METASTASIS AND THERAPY RESISTANCE IN NEUROBLASTOMA},
         year = {2024},
         doi = {DOI},
         URL = {URL},
