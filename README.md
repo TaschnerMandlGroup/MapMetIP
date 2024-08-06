@@ -23,10 +23,10 @@ This code supplements the publication (in preparation) by Lazic et al. Therein, 
  <summary><strong>Download cellpose models, spillover measurements and ilastik classifiers</strong></summary>
  
  In order to be able to use the segmentation, spillover compensation and background correction within `MapMetIP`, the fine-tuned cellpose models, spillover measurements and ilastik-trained background/foreground classifiers have to be downloaded from `zenodo`. 
- <!--also possible like this: zenodo_get 10.5281/zenodo.10801832-->
+
  Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
  ```bash
- wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/99073/files/MapMetIP_models.zip
+ wget -P <path/to/extract/directory> https://zenodo.org/records/13220635/files/MapMetIP_models.zip
  unzip <path/to/extract/directory>/MapMetIP_models.zip -d <path/to/extract/directory>
  rm <path/to/extract/directory>/MapMetIP_models.zip
  ```
@@ -37,7 +37,7 @@ This code supplements the publication (in preparation) by Lazic et al. Therein, 
  We prepared a small test dataset with one representative primary tumor and bone marrow sample to be used in the notebooks for demonstration purposes.
  Replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
  ```bash
- wget -P <path/to/extract/directory> https://sandbox.zenodo.org/records/99073/files/MapMetIP_TestDataset.zip
+ wget -P <path/to/extract/directory> https://zenodo.org/records/13220635/files/MapMetIP_TestDataset.zip
  unzip <path/to/extract/directory>/MapMetIP_TestDataset.zip -d <path/to/extract/directory>
  rm <path/to/extract/directory>/MapMetIP_TestDataset.zip
  ```
@@ -45,7 +45,13 @@ This code supplements the publication (in preparation) by Lazic et al. Therein, 
 <details>
  <summary><strong>Download full dataset</strong></summary>
  
- The entire dataset, described in Lazic et al., will be uploaded with the publication.
+The entire dataset containing all IF and IMC images from Lazic et al. has a size of ~69 GB (even after h5 compression with compression level 7). 
+For download, replace `path/to/extract/directory` with the absolute path to the directory, where the data should be stored.
+ ```bash
+ wget -P <path/to/extract/directory> https://zenodo.org/records/13220635/files/MapMetIP_FullDataset.zip
+ unzip <path/to/extract/directory>/MapMetIP_FullDataset.zip -d <path/to/extract/directory>
+ rm <path/to/extract/directory>/MapMetIP_TestDataset.zip
+ ```
  </details>
 
 ## Installation
@@ -86,7 +92,7 @@ A Jupyter Notebook server session can then be accessed via your browser at `loca
  </details>
     
  <details>
- <summary><strong>Developer Mode</strong></summary>
+ <summary><strong>Local Development Environment</strong></summary>
  Follow the instructions provided in this section to run the pipeline in your local development environment.
  First clone the repository:
    
