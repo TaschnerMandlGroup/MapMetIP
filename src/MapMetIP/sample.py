@@ -169,7 +169,7 @@ def save_sample(sample, out_dir, n):
         img_vis = img[np.array(v["data_channels"])=="IF1_DAPI"].squeeze()
         intensities_0px = v["intensiy_features_0"]
         intensities_1px = v["intensiy_features_1"]
-        if n == True:
+        if n:
             neighbors = v["neighbors"]
         else:
             neighbors = ""
@@ -189,9 +189,9 @@ def save_sample(sample, out_dir, n):
             save_path = os.path.join(out_dir, folder, f"{sample.sample_name}_{roi_num:0>{3}}{file_type}")
             ensure_dir(save_path)
             if save_function == 'to_csv':
-                if folder == "neighbors" and n==False:
+                if folder == "neighbors" and not n:
                     continue
-                elif folder == "neighbors" and n==True:
+                elif folder == "neighbors" and n:
                     data.to_csv(save_path, index=False)
                 else:
                     data.to_csv(save_path)
