@@ -55,7 +55,7 @@ def parse():
 if __name__ == "__main__":
     script_path = os.path.abspath(__file__)
     script_dir = os.path.dirname(script_path)
-    debug_file = (os.path.join(script_dir, "debug_file.json")) #None
+    debug_file = None #(os.path.join(script_dir, "debug_file.json")) 
     
     if debug_file:
         with open(debug_file, 'rb') as fh:
