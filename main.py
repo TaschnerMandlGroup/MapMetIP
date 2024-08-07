@@ -38,6 +38,7 @@ def parse():
     parser.add_argument("--backgroundcorrection_folder", default=None, type=str, help="Path to ilastik background/foreground classifiers. Will be skipped unless defined.")
     parser.add_argument("--save_dir", type=str, required=bool, help="Path to write results.")
     parser.add_argument("--refine_threshold", default=None, help="Threshold used for refinement of mask. Will be skipped, unless defined."),
+    parser.add_argument("--extract_neighbors", action="store_true", help="Extract neigbhors.")
     parser.add_argument("--segmentation_model", type=str, required=bool, help="Path to cellpose segmentation model."),
     parser.add_argument("--log_path", type=str, required=bool, help="Path to write log files.")
     parser.add_argument("--perform_dimr", action="store_false", help="Skip DIMR hot pixel removal.")
@@ -227,12 +228,13 @@ if __name__ == "__main__":
     sample = minmax_sample(sample)
     
     sample = extract_sample_features(sample, featureextractor)
-    
-    sample = extract_neighbors(sample, dmax=150)
+
+    if args.extract_neighbors:
+        sample = extract_neighbors(sample, dmax=15)
 
     if not os.path.exists(args.save_dir):
         os.mkdir(args.save_dir)
 
-    save_sample(sample, args.save_dir)
+    save_sample(sample, args.save_dir, args.extract_neighbors)
     
     logger.debug("*"*10 + " FINISHED " + "*"*10)

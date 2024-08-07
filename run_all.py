@@ -57,6 +57,7 @@ if __name__ == "__main__":
             backgroundcorrection_folder = os.path.join(args.model_path, "BM/BC_classifiers")
             segmentation_model = os.path.join(args.model_path, "BM/segmentation_model/CP_BM")
             refine_threshold = 0.12
+            extract_neighbors_flag = ""
             
 
         elif "TU" in sample:
@@ -66,6 +67,7 @@ if __name__ == "__main__":
             backgroundcorrection_folder = os.path.join(args.model_path, "TU/BC_classifiers")
             segmentation_model = os.path.join(args.model_path, "TU/segmentation_model/CP_TU")
             refine_threshold = None
+            extract_neighbors_flag = "--extract_neighbors"
 
 
         try:
@@ -80,6 +82,7 @@ if __name__ == "__main__":
                                             --backgroundcorrection_folder {backgroundcorrection_folder} \
                                             --segmentation_model {segmentation_model} \
                                             --refine_threshold {refine_threshold} \
+                                            {extract_neighbors_flag} \
                                             --log_path {log_path}\
                                             --save_dir {save_dir}", shell=True)
             

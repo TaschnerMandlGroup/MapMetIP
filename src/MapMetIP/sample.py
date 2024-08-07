@@ -156,7 +156,7 @@ def ensure_dir(file_path):
     if not os.path.exists(directory):
         os.makedirs(directory, exist_ok=True)
             
-def save_sample(sample, out_dir):
+def save_sample(sample, out_dir, n):
 
     for k,v in sample.data.items():
         
@@ -169,6 +169,10 @@ def save_sample(sample, out_dir):
         img_vis = img[np.array(v["data_channels"])=="IF1_DAPI"].squeeze()
         intensities_0px = v["intensiy_features_0"]
         intensities_1px = v["intensiy_features_1"]
+        if n == True:
+            neighbors = v["neighbors"]
+        else:
+            neighbors = ""
         regionprops = v["morphological_features"]
         masks_vis = v["small_segmentation_masks"]
         large_masks = v["large_segmentation_masks"]
@@ -176,16 +180,21 @@ def save_sample(sample, out_dir):
 
         masks = np.expand_dims(masks_vis, (0, 1, 2, 5))
 
-        folders = ["large_segmentation_masks", "intensities-0px", "intensities-1px", "regionprops", "img", "img-vis", "masks", "masks-vis"]
-        file_types = ['.tif', '.csv', '.csv', '.csv', '.tif', '.tif', '.tif', '.tif']
-        data_to_save = [large_masks, intensities_0px, intensities_1px, regionprops, img, img_vis, masks, masks_vis]
-        save_functions = [tifffile.imwrite, 'to_csv', 'to_csv', 'to_csv', to_tiff, tifffile.imwrite, tifffile.imwrite, tifffile.imwrite]
+        folders = ["large_segmentation_masks", "intensities-0px", "intensities-1px", "neighbors", "regionprops", "img", "img-vis", "masks", "masks-vis"]
+        file_types = ['.tif', '.csv', '.csv', '.csv', '.csv', '.tif', '.tif', '.tif', '.tif']
+        data_to_save = [large_masks, intensities_0px, intensities_1px, neighbors, regionprops, img, img_vis, masks, masks_vis]
+        save_functions = [tifffile.imwrite, 'to_csv', 'to_csv', 'to_csv', 'to_csv', to_tiff, tifffile.imwrite, tifffile.imwrite, tifffile.imwrite]
 
         for folder, file_type, data, save_function in zip(folders, file_types, data_to_save, save_functions):
             save_path = os.path.join(out_dir, folder, f"{sample.sample_name}_{roi_num:0>{3}}{file_type}")
             ensure_dir(save_path)
             if save_function == 'to_csv':
-                data.to_csv(save_path)
+                if folder == "neighbors" and n==False:
+                    continue
+                elif folder == "neighbors" and n==True:
+                    data.to_csv(save_path, index=False)
+                else:
+                    data.to_csv(save_path)
             elif save_function == to_tiff:
                 save_function(data, save_path, image_name=f"{sample.sample_name}_{roi_num:0>{3}}{file_type}", channel_names=channel_names, pixel_size=1.0, pixel_depth=1.0)
             else:
