@@ -50,7 +50,7 @@ For download, replace `path/to/extract/directory` with the absolute path to the 
  ```bash
  wget -P <path/to/extract/directory> https://zenodo.org/records/13220635/files/MapMetIP_FullDataset.zip
  unzip <path/to/extract/directory>/MapMetIP_FullDataset.zip -d <path/to/extract/directory>
- rm <path/to/extract/directory>/MapMetIP_TestDataset.zip
+ rm <path/to/extract/directory>/MapMetIP_FullDataset.zip
  ```
  </details>
 
