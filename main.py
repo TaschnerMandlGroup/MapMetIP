@@ -52,10 +52,21 @@ def parse():
 
     return args 
 
+def set_diff_to_zero(large, small):
+    # During downscaling of the segmentation mask, small objects might disappear
+    # Therefore, we exclude cells, that are not present in the small segmentation mask, 
+    # from the large one
+    diff = np.setdiff1d(np.unique(large), np.unique(small))
+    # Set those elements in large to 0
+    for value in diff:
+        large[large == value] = 0
+
+    return large
+
 if __name__ == "__main__":
     script_path = os.path.abspath(__file__)
     script_dir = os.path.dirname(script_path)
-    debug_file = None #(os.path.join(script_dir, "debug_file.json")) 
+    debug_file = (os.path.join(script_dir, "debug_file.json")) #None
     
     if debug_file:
         with open(debug_file, 'rb') as fh:
@@ -127,8 +138,13 @@ if __name__ == "__main__":
             ymin, ymax = idxs[1].min(), idxs[1].max()
             logger.debug(f"mapping idxs: {xmin}, {xmax}, {ymin}, {ymax}")
             
-            large_segmentation_masks = segmentation_masks[xmin:xmax, ymin:ymax]
-            large_refined_segmentation_masks = refined_segmentation_masks[xmin:xmax, ymin:ymax]
+            large_segmentation_masks = segmentation_masks * large_mask
+            large_segmentation_masks = large_segmentation_masks[xmin:xmax, ymin:ymax]
+            large_segmentation_masks = set_diff_to_zero(large_segmentation_masks, small_segmentation_masks)
+
+            large_refined_segmentation_masks = refined_segmentation_masks * np.array(large_mask, dtype=int)
+            large_refined_segmentation_masks = large_refined_segmentation_masks[xmin:xmax, ymin:ymax]
+            large_refined_segmentation_masks = set_diff_to_zero(large_refined_segmentation_masks, small_refined_segmentation_masks)
             
             sample.mod0[roi].image_stack = mod0_stack
             sample.mod1[roi].image_stack = mod1_stack
@@ -156,7 +172,9 @@ if __name__ == "__main__":
             
             logger.debug(f"mapping idxs: {xmin}, {xmax}, {ymin}, {ymax}")
 
-            large_segmentation_masks = segmentation_masks[xmin:xmax, ymin:ymax]
+            large_segmentation_masks = segmentation_masks * np.array(large_mask, dtype=int)
+            large_segmentation_masks = set_diff_to_zero(large_segmentation_masks, small_segmentation_masks)
+            large_segmentation_masks = large_segmentation_masks[xmin:xmax, ymin:ymax]
         
             sample.mod0[roi].image_stack = mod0_stack
             sample.mod1[roi].image_stack = mod1_stack
