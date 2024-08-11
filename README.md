@@ -3,6 +3,7 @@
 # MapMet - Image Processing Pipeline
 [comment]: <> (repo-specific shields will work once the repo is online)
 ![Python Version](https://img.shields.io/badge/python-3.10.9-blue)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13220634.svg)](https://doi.org/10.5281/zenodo.13294578)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13220634.svg)](https://doi.org/10.5281/zenodo.13220634)
 ![Suggestions Welcome](https://img.shields.io/badge/suggestions-welcome-green)
 
